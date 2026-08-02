@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/dottxt-ai/dottxt-python/blob/main/docs/cli.md
+docs: https://github.com/dottxt-ai/dottxt-python/blob/main/docs/cli.md
+description: >-
+  The first-party dottxt CLI ships inside the official Python package
+  (pyproject scripts: dottxt = dottxt.cli:main) and is backed by the dottxt
+  SDK: login/credential management, model discovery, one-off structured
+  generation, JSON Patch streaming, and local JSON Schema validation. The
+  package itself is catalogued in packages/txt-packages.yml.
+repo: https://github.com/dottxt-ai/dottxt-python
+install:
+  pip: pip install dottxt
+global_flags:
+  - {name: '-h, --help', description: Show help}
+  - {name: '--version', description: Print version}
+  - {name: '--json', description: 'Emit machine-readable JSON (errors as {"error": {"message": "..."}}, exit code 1)'}
+  - {name: '--verbose', description: Expanded diagnostics on stderr}
+exit_codes:
+  - {code: 0, meaning: success}
+  - {code: 1, meaning: runtime/config/input errors}
+  - {code: 2, meaning: usage/argument errors (click)}
+commands:
+  auth:
+    - {name: login, description: 'Store API credentials (resolution order: DOTTXT_API_KEY, stdin when non-TTY, interactive prompt).'}
+    - {name: logout, description: Delete locally stored credentials.}
+  models:
+    - {name: models, description: 'List available models; --author NAME filters; DOTTXT_MODEL sets a shell default.'}
+  generation:
+    - {name: generate, description: 'Run one generation: -m/--model (or DOTTXT_MODEL), -s/--schema FILE (required), prompt from argument or stdin.'}
+    - {name: stream, description: 'Stream one generation as RFC 6902 JSON Patch add ops, one per line (NDJSON), in arrival order.'}
+  schema:
+    - {name: schema check, description: 'Validate a schema file as JSON Schema (dottxt schema check schema.json).'}
+environment:
+  - {name: DOTTXT_API_KEY, description: API key read by CLI and SDK}
+  - {name: DOTTXT_BASE_URL, description: 'Override base URL (default https://api.dottxt.ai/v1)'}
+  - {name: DOTTXT_MODEL, description: Default model id for generate/stream}

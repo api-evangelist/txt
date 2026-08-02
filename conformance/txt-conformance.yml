@@ -1,0 +1,60 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  Derived from openapi/txt-dottxt-openapi-original.json (securitySchemes,
+  responses, pagination parameters) and the docs (docs.dottxt.ai/api/overview,
+  /api/chat-completions, /json-schema/streaming, /supported-features,
+  /migrate-from-other-providers).
+standards:
+  - id: openai-chat-completions-compat
+    conforms: true
+    evidence: >-
+      Docs state the API follows the OpenAI chat completions format (point an
+      OpenAI SDK at base_url https://api.dottxt.ai/v1); response/request
+      schemas mirror OpenAI (ChatCompletionRequest/Response, OpenAIError).
+  - id: open-responses
+    conforms: true
+    evidence: >-
+      POST /responses is described in the OpenAPI as an "Open Responses
+      compatible endpoint" (openresponses.org reference linked from the spec's
+      responses-api tag).
+  - id: json-schema
+    conforms: true
+    evidence: >-
+      Core product contract: response_format carries JSON Schema that is
+      compiled and enforced by constrained decoding; supported/unsupported
+      keywords enumerated at docs.dottxt.ai/supported-features.
+  - id: rfc6902-json-patch
+    conforms: true
+    evidence: >-
+      stream: "patch" emits RFC 6902 add operations (JsonPatchOperation schema;
+      docs.dottxt.ai/api/chat-completions#json-patch-streaming).
+  - id: sse
+    conforms: true
+    evidence: 'stream: true token deltas and Accept: text/event-stream patch framing are Server-Sent Events.'
+  - id: ndjson
+    conforms: true
+    evidence: 'Default patch-stream framing is NDJSON (Content-Type: application/x-ndjson).'
+  - id: cursor-pagination
+    conforms: true
+    evidence: >-
+      GET /batches and GET /files use OpenAI-style cursor pagination
+      (after/limit, has_more/last_id) per the CursorPagination schema.
+  - id: http-bearer-auth
+    conforms: true
+    evidence: openapi securitySchemes define BearerAuth (http bearer, API key).
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 security scheme in the OpenAPI; no OAuth documented.
+  - id: oidc
+    conforms: false
+    evidence: No /.well-known/openid-configuration (404 on dottxt.ai and docs host; API host is an SPA catch-all).
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use the OpenAI-compatible error envelope, not application/problem+json.
+  - id: idempotency-key
+    conforms: false
+    evidence: No Idempotency-Key header or replay semantics documented or declared.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt not published on any real host (404; API-host 200s are SPA catch-alls).

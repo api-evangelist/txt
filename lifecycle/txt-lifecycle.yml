@@ -1,0 +1,26 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://docs.dottxt.ai (no versioning/deprecation policy pages),
+  https://dottxt.ai/announcements, https://status.dottxt.ai (unresolvable),
+  openapi/txt-dottxt-openapi-original.json (no deprecated operations).
+description: >-
+  Lifecycle posture of the dottxt API. The platform is young (api.dottxt.ai
+  announced 2026-04-22): a /v1 URI-versioned surface with no published
+  deprecation policy, no Sunset/Deprecation header support documented, no SLA,
+  and no public status page (status.dottxt.ai does not resolve). Company
+  announcements are the closest thing to a dated change feed; see
+  changelog/txt-changelog.yml.
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://docs.dottxt.ai/api/overview
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No deprecation policy published; no operations marked deprecated in the OpenAPI.
+sla:
+  url: null
+status_page: null
+announcements: https://dottxt.ai/announcements
+deprecated_operations: []

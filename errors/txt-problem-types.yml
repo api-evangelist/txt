@@ -1,0 +1,56 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/txt-dottxt-openapi-original.json
+format: openai-error
+description: >-
+  Error catalog derived from the 4xx/5xx responses declared in the published
+  dottxt OpenAPI. Errors use the OpenAI-compatible envelope
+  {"error": {"code", "message", "param", "type"}} (schema OpenAIErrorResponse),
+  not RFC 9457 problem+json. Patch-streaming requests fail with a standard
+  JSON error before any patch records are emitted; a non-200 status means no
+  patch records will arrive.
+envelope:
+  schema: OpenAIErrorResponse
+  fields:
+    error.code: machine-readable code (e.g. invalid_api_key), nullable
+    error.message: human-readable message
+    error.param: offending parameter when applicable, nullable
+    error.type: error class (e.g. authentication_error)
+problems:
+  - status: 400
+    title: Invalid request
+    detail: Malformed messages array, missing required fields, or invalid schema/body.
+    source_operations: [chat_completions, embeddings, create_response, create_batch, delete_batch, upload_file, retry_failed_batch_requests, retry_specific_requests]
+  - status: 401
+    title: Invalid or missing API key
+    detail: Authorization header not set to a valid Bearer key.
+    example_code: invalid_api_key
+    example_type: authentication_error
+    source_operations: [chat_completions, embeddings, create_response, list_models, get_model]
+  - status: 402
+    title: Insufficient credits
+    detail: Pay-per-token balance exhausted; top up the account to continue.
+    source_operations: [chat_completions, embeddings, create_response]
+  - status: 403
+    title: Model access denied / upload forbidden
+    detail: The API key does not have access to the requested model or action.
+    source_operations: [chat_completions, embeddings, create_response, upload_file]
+  - status: 404
+    title: Not found
+    detail: Unknown model, batch, or file ID. Use GET /models to list available models.
+    source_operations: [chat_completions, embeddings, create_response, get_model, get_batch, delete_batch, get_batch_analytics, cancel_batch, get_batch_results, retry_failed_batch_requests, retry_specific_requests, get_file, delete_file, get_file_content, get_file_cost_estimate]
+  - status: 413
+    title: File too large
+    detail: Uploaded JSONL file exceeds the size limit.
+    source_operations: [upload_file]
+  - status: 429
+    title: Rate limit exceeded
+    detail: Back off and retry after a short delay. No rate-limit headers documented.
+    source_operations: [chat_completions, embeddings, create_response, upload_file]
+  - status: 500
+    title: Unexpected error
+    detail: Retry the request or contact support if the issue persists.
+    source_operations: [chat_completions, embeddings, create_response, list_batches, create_batch, get_batch, delete_batch, get_batch_analytics, cancel_batch, get_batch_results, retry_failed_batch_requests, retry_specific_requests, list_files, upload_file, get_file, delete_file, get_file_content, get_file_cost_estimate]
+sdk_errors:
+  - name: dottxt.PatchStreamError
+    detail: Python SDK surfaces mid-stream connection failures (closed stream without terminator) as PatchStreamError.

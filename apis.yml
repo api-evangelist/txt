@@ -1,7 +1,15 @@
 aid: txt
 name: .txt
-description: .txt is a company surfaced as a portfolio company of seedcamp and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  .txt (dottxt) is the structured-generation company behind the open-source
+  Outlines library (65M+ downloads). Its hosted platform, the dottxt API at
+  api.dottxt.ai, is an OpenAI-compatible pay-per-token API whose defining
+  contract is schema enforcement: a JSON Schema passed in response_format is
+  compiled and enforced by constrained decoding, so model outputs are
+  guaranteed valid — including field-by-field RFC 6902 JSON Patch streaming,
+  Open Responses support, embeddings, and JSONL batch processing. Founded by
+  the Outlines maintainers and backed by Seedcamp; inference is operated with
+  launch partner Doubleword.
 url: https://raw.githubusercontent.com/api-evangelist/txt/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,12 +17,201 @@ x-backed-by:
 - seedcamp
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://cdn.sanity.io/images/z84vkf2c/production/f496d7868262fbf26f71782579181541f75b45b5-100x50.svg
 tags:
 - Company
-apis: []
+- Artificial Intelligence
+- LLM
+- Structured Outputs
+- JSON Schema
+- Inference
+- Developer Tools
+- Machine Learning
+apis:
+- aid: txt:txt-batches-api
+  name: .txt batches API
+  description: >-
+    Process large volumes of requests asynchronously.
+
+
+    Batch processing is ideal when you:
+
+    - Have many requests that don't need immediate responses
+
+    - Want to process data in bulk (e.g., embeddings for a document corpus)
+
+    - Are running offline evaluations or data pipelines
+
+
+    Choose your completion window: 1 hour or 24 hours. You can track progress, cancel in-flight batches,
+    and retry failed requests.
+
+
+    [Getting started with the Batch API →](https://docs.doubleword.ai/batches/getting-started-with-batched-api)
+  humanURL: https://docs.dottxt.ai/api/overview
+  baseURL: https://api.dottxt.ai/v1
+  tags:
+  - batches
+  properties:
+  - type: OpenAPI
+    url: openapi/txt-batches-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dottxt.ai/api/overview
+  - type: APIReference
+    url: https://docs.dottxt.ai/api/chat-completions
+- aid: txt:txt-chat-api
+  name: .txt chat API
+  description: >-
+    Create model responses for chat conversations.
+
+
+    Supports:
+
+    - **Multi-turn dialogue** with conversation history
+
+    - **System prompts** to control model behavior
+
+    - **Tool calling** for function execution and structured outputs
+
+    - **Streaming** for real-time token delivery
+
+    - **Sampling parameters** like temperature, top_p, and frequency penalties
+  humanURL: https://docs.dottxt.ai/api/overview
+  baseURL: https://api.dottxt.ai/v1
+  tags:
+  - chat
+  properties:
+  - type: OpenAPI
+    url: openapi/txt-chat-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dottxt.ai/api/overview
+  - type: APIReference
+    url: https://docs.dottxt.ai/api/chat-completions
+- aid: txt:txt-embeddings-api
+  name: .txt embeddings API
+  description: >-
+    Generate vector representations of text.
+
+
+    Use embeddings for:
+
+    - **Semantic search** - find content by meaning, not just keywords
+
+    - **Clustering** - group similar documents together
+
+    - **Classification** - categorize text based on similarity to examples
+
+    - **Recommendations** - suggest related content
+  humanURL: https://docs.dottxt.ai/api/overview
+  baseURL: https://api.dottxt.ai/v1
+  tags:
+  - embeddings
+  properties:
+  - type: OpenAPI
+    url: openapi/txt-embeddings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dottxt.ai/api/overview
+  - type: APIReference
+    url: https://docs.dottxt.ai/api/chat-completions
+- aid: txt:txt-files-api
+  name: .txt files API
+  description: >-
+    Upload and manage JSONL files for batch processing.
+
+
+    Each line in the file should be a JSON object with:
+
+    - `custom_id` - your identifier for tracking the request
+
+    - `method` - HTTP method (POST)
+
+    - `url` - endpoint path (e.g., `/v1/chat/completions`)
+
+    - `body` - the request payload
+
+
+    [Learn more about the JSONL file format →](https://docs.doubleword.ai/batches/jsonl-files)
+  humanURL: https://docs.dottxt.ai/api/overview
+  baseURL: https://api.dottxt.ai/v1
+  tags:
+  - files
+  properties:
+  - type: OpenAPI
+    url: openapi/txt-files-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dottxt.ai/api/overview
+  - type: APIReference
+    url: https://docs.dottxt.ai/api/chat-completions
+- aid: txt:txt-models-api
+  name: .txt models API
+  description: >-
+    List and retrieve information about available models.
+
+
+    Use these endpoints to discover which models you have access to and their capabilities.
+  humanURL: https://docs.dottxt.ai/api/overview
+  baseURL: https://api.dottxt.ai/v1
+  tags:
+  - models
+  properties:
+  - type: OpenAPI
+    url: openapi/txt-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dottxt.ai/api/overview
+  - type: APIReference
+    url: https://docs.dottxt.ai/api/chat-completions
+- aid: txt:txt-responses-api-api
+  name: .txt responses-api API
+  description: >-
+    Create model responses with enhanced capabilities.
+
+
+    Open Responses compatible endpoint providing advanced features:
+
+
+    - **Reasoning models** - Control computational effort with `reasoning` parameter
+
+    - **Stateful conversations** - Maintain context across turns with `previous_response_id`
+
+    - **Flexible input** - Use simple strings or full message arrays
+
+    - **Text output configuration** - Structured outputs via `text` parameter
+
+    - **Context management** - Handle overflow with `truncation` parameter
+
+
+    [Open Responses API Reference →](https://www.openresponses.org/reference)
+  humanURL: https://docs.dottxt.ai/api/overview
+  baseURL: https://api.dottxt.ai/v1
+  tags:
+  - responses-api
+  properties:
+  - type: OpenAPI
+    url: openapi/txt-responses-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dottxt.ai/api/overview
+  - type: APIReference
+    url: https://docs.dottxt.ai/api/chat-completions
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -22,4 +219,52 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: http://dottxt.ai
+  url: https://dottxt.ai
+- type: Documentation
+  url: https://docs.dottxt.ai
+- type: APIReference
+  url: https://docs.dottxt.ai/api/overview
+- type: GettingStarted
+  url: https://docs.dottxt.ai/quickstart
+- type: SignUp
+  url: https://h1xbpbfsf0w.typeform.com/to/fwQNWmS8
+- type: Blog
+  url: https://blog.dottxt.ai/
+- type: GitHubOrganization
+  url: https://github.com/dottxt-ai
+- type: Support
+  url: https://discord.gg/ErZ8XnCmkQ
+- type: PrivacyPolicy
+  url: https://dottxt.ai/privacy-policy
+- type: LLMsTxt
+  url: llms/txt-llms.txt
+- type: Packages
+  url: packages/txt-packages.yml
+- type: SDKs
+  url: packages/txt-packages.yml
+- type: CLI
+  url: cli/txt-cli.yml
+- type: WellKnown
+  url: well-known/txt-well-known.yml
+- type: MCPServer
+  url: mcp/txt-mcp.yml
+- type: Conformance
+  url: conformance/txt-conformance.yml
+- type: ErrorCatalog
+  url: errors/txt-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/txt-lifecycle.yml
+- type: ChangeLog
+  url: changelog/txt-changelog.yml
+- type: Authentication
+  url: authentication/txt-authentication.yml
+- type: Conventions
+  url: conventions/txt-conventions.yml
+- type: DataModel
+  url: data-model/txt-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/txt-agentic-access.yml
+- type: DomainSecurity
+  url: security/txt-domain-security.yml

@@ -1,0 +1,84 @@
+generated: '2026-07-21'
+method: searched
+description: >-
+  Results of probing the /.well-known/ discovery surface for every dottxt host
+  (website, docs, API base, blog). Status is the HTTP code observed at fetch
+  time. api.dottxt.ai and blog.dottxt.ai are fronted by the Next.js marketing
+  site and answer 200 with a text/html SPA shell for every /.well-known/ path,
+  so those responses are recorded as catch-all-not-a-real-document and were not
+  saved. The only genuine document found is docs.dottxt.ai/.well-known/mcp.json
+  (Mintlify-hosted docs MCP server manifest), saved verbatim as
+  txt-docs-mcp.json.
+hosts:
+  - host: https://dottxt.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/mcp.json
+        status: 404
+  - host: https://docs.dottxt.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/mcp.json
+        status: 200
+        file: txt-docs-mcp.json
+        notes: Mintlify docs MCP manifest; MCP endpoint at https://docs.dottxt.ai/mcp (GET returns 405, POST transport).
+  - host: https://api.dottxt.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        catch_all: true
+        notes: text/html SPA shell (marketing site catch-all), not a real security.txt; not saved.
+      - path: /.well-known/openid-configuration
+        status: 200
+        catch_all: true
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        catch_all: true
+      - path: /.well-known/api-catalog
+        status: 200
+        catch_all: true
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        catch_all: true
+      - path: /.well-known/mcp.json
+        status: 200
+        catch_all: true
+  - host: https://blog.dottxt.ai
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        catch_all: true
+        notes: Same Next.js catch-all as api.dottxt.ai; serves the marketing homepage HTML for every path.
+      - path: /.well-known/openid-configuration
+        status: 200
+        catch_all: true
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        catch_all: true
+      - path: /.well-known/api-catalog
+        status: 200
+        catch_all: true
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        catch_all: true
+      - path: /.well-known/mcp.json
+        status: 200
+        catch_all: true

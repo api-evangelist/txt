@@ -1,0 +1,86 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://docs.dottxt.ai/api/overview, /api/chat-completions,
+  /migrate-from-other-providers, /json-schema/streaming; cross-checked against
+  openapi/txt-dottxt-openapi-original.json.
+description: >-
+  Cross-cutting request/response semantics of the dottxt API — an
+  OpenAI-compatible structured-generation surface. The distinguishing
+  convention is schema-as-contract: a JSON Schema passed in response_format is
+  compiled and enforced by constrained decoding, and can be streamed
+  field-by-field as RFC 6902 JSON Patch operations.
+
+base_url: https://api.dottxt.ai/v1
+api_style: >-
+  REST over HTTPS, JSON requests/responses, OpenAI chat-completions
+  compatibility (point an OpenAI SDK at the base URL and swap the API key).
+
+authentication:
+  scheme: Bearer API key (Authorization header), keys prefixed sk-dottxt-
+  docs: https://docs.dottxt.ai/api/authentication
+  detail: authentication/txt-authentication.yml
+
+structured_output:
+  mechanism: 'response_format {type: json_schema, json_schema: {name, schema}}'
+  guarantee: outputs are schema-valid by construction (constrained decoding)
+  supported_keywords: https://docs.dottxt.ai/supported-features
+  notes: >-
+    Field order in the schema determines streaming arrival order; docs advise
+    putting routing/classification fields first and long-form fields last.
+
+idempotency:
+  supported: false
+  notes: >-
+    No Idempotency-Key header or replay semantics are documented in the API
+    docs or declared in the OpenAPI. Batch JSONL lines carry a client-supplied
+    custom_id for request tracking within a batch, which aids reconciliation
+    but is not an idempotency contract.
+
+pagination:
+  style: cursor (OpenAI-compatible)
+  applies_to: [GET /batches, GET /files]
+  request_params:
+    after: cursor object ID to start after (exclusive) — pass last_id from the previous response
+    limit: max items to return (default 20, max 100)
+  response_fields: [data, has_more, last_id]
+
+request_tracing:
+  request_id_header: none documented
+  notes: Completions carry an id (chatcmpl-...) and optional system_fingerprint in the body.
+
+versioning:
+  scheme: uri-path
+  current: v1
+  notes: No dated versioning or version header documented; see lifecycle/txt-lifecycle.yml.
+
+error_envelope:
+  shape: 'OpenAI-compatible {"error": {"code", "message", "param", "type"}}'
+  format: openai-error (not RFC 9457 problem+json)
+  detail: errors/txt-problem-types.yml
+
+streaming:
+  token_deltas: 'stream: true — SSE stream of token deltas (OpenAI-compatible)'
+  json_patch: >-
+    stream: "patch" — structured response streamed field-by-field as RFC 6902
+    add operations; NDJSON (application/x-ndjson) by default, SSE with
+    Accept: text/event-stream (SSE adds a final event: done). Requires
+    response_format with a JSON schema. Root seed op first, then leaf adds in
+    schema order, container seeds before items.
+  docs: https://docs.dottxt.ai/json-schema/streaming
+
+rate_limit_signaling:
+  status: 429 documented ("Rate limit exceeded. Back off and retry after a short delay.")
+  headers: no rate-limit response headers documented
+  numeric_limits: not published
+
+billing_signals:
+  '402': insufficient credits (pay-per-token platform; top up to continue)
+  cost_estimate: GET /files/{file_id}/cost-estimate before running a batch
+
+cross_links:
+  errors: errors/txt-problem-types.yml
+  lifecycle: lifecycle/txt-lifecycle.yml
+  authentication: authentication/txt-authentication.yml
+  cli: cli/txt-cli.yml
+  data_model: data-model/txt-data-model.yml

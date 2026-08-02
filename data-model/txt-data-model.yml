@@ -1,0 +1,26 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  Derived from openapi/txt-dottxt-openapi-original.json ($ref links and
+  id-reference fields across the files/batches/chat/embeddings/models/responses
+  surfaces).
+docs: https://docs.dottxt.ai/api/overview
+notation: >-
+  relationships use has_one / has_many / belongs_to with the foreign-key field
+  name; direction is from the entity that owns the reference.
+entities:
+  - {name: Model, id_example: openai/gpt-oss-20b, domain: inference, description: A hosted model available to the API key (ModelObject; includes cost breakdown via ModelCostBreakdown).}
+  - {name: ChatCompletion, id_prefix: chatcmpl-, domain: inference, description: A chat completion result (choices, usage, optional system_fingerprint).}
+  - {name: Embedding, domain: inference, description: Vector representation of input text (EmbeddingResponse with EmbeddingData items and usage).}
+  - {name: Response, domain: inference, description: Open Responses object (ResponseObject); supports stateful conversations via previous_response_id.}
+  - {name: File, domain: batch, description: Uploaded JSONL file of requests for batch processing (FileResponse; purpose enum; cost estimate via FileCostEstimate).}
+  - {name: Batch, domain: batch, description: Asynchronous processing run over an uploaded file (BatchResponse with RequestCounts, BatchErrors, optional BatchAnalytics).}
+relationships:
+  - {from: Batch, to: File, type: belongs_to, via: input_file_id, description: A batch is created from an uploaded JSONL file.}
+  - {from: Batch, to: File, type: has_one, via: output_file_id, description: Completed results are written to an output file.}
+  - {from: Batch, to: File, type: has_one, via: error_file_id, description: Failed request records are written to an error file.}
+  - {from: ChatCompletion, to: Model, type: belongs_to, via: model, description: Every completion is produced by a model id.}
+  - {from: Embedding, to: Model, type: belongs_to, via: model}
+  - {from: Response, to: Model, type: belongs_to, via: model}
+  - {from: Response, to: Response, type: belongs_to, via: previous_response_id, description: Stateful conversation chaining on the Responses API.}
+  - {from: Batch, to: ChatCompletion, type: has_many, via: 'JSONL lines (url: /v1/chat/completions, custom_id per line)', description: Each batch line is an embedded chat/embeddings request tracked by custom_id.}

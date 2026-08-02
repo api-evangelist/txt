@@ -1,0 +1,45 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the dottxt API
+  version: 1.0.0
+extends: openapi/txt-dottxt-openapi-original.json
+x-provenance:
+  generated: '2026-07-21'
+  method: generated
+  source: API Evangelist enrichment pipeline (local-v1)
+actions:
+  - target: $.info
+    update:
+      contact:
+        name: .txt (dottxt)
+        email: contact@dottxt.ai
+        url: https://dottxt.ai
+      x-apievangelist:
+        provider: txt
+        artifacts:
+          authentication: authentication/txt-authentication.yml
+          conventions: conventions/txt-conventions.yml
+          errors: errors/txt-problem-types.yml
+          lifecycle: lifecycle/txt-lifecycle.yml
+          data-model: data-model/txt-data-model.yml
+          cli: cli/txt-cli.yml
+          packages: packages/txt-packages.yml
+  - target: $.info.description
+    update: >-
+      The dottxt API — OpenAI-compatible structured generation with
+      schema-as-contract guarantees: JSON Schema passed in response_format is
+      compiled and enforced by constrained decoding, streamable field-by-field
+      as RFC 6902 JSON Patch. Surfaces: chat completions, Open Responses,
+      embeddings, JSONL batch processing with cost estimates and retries, and
+      model discovery.
+  - target: $.externalDocs
+    update:
+      description: dottxt developer documentation
+      url: https://docs.dottxt.ai
+  - target: $.paths['/chat/completions'].post
+    update:
+      x-marquee: true
+      x-notes: >-
+        Primary structured-output operation; stream accepts true (SSE token
+        deltas) or "patch" (NDJSON/SSE RFC 6902 field streaming, requires
+        response_format json_schema).

@@ -1,0 +1,88 @@
+generated: '2026-07-21'
+method: searched
+status: published
+source: https://docs.dottxt.ai/.well-known/mcp.json
+description: >-
+  .txt (dottxt) publishes a hosted, unauthenticated MCP server for its
+  documentation via Mintlify: the manifest at
+  docs.dottxt.ai/.well-known/mcp.json (saved verbatim in
+  well-known/txt-docs-mcp.json) declares an HTTP transport, and the endpoint
+  https://docs.dottxt.ai/mcp answers 405 to GET (POST-only streamable HTTP),
+  confirming it is live. This is a docs/search MCP server, not a tool wrapper
+  over the dottxt API itself; no official API MCP server was found on npm, the
+  dottxt-ai GitHub org, or the docs. A candidate tool list derived from the
+  published OpenAPI is included for a future API-level server.
+server:
+  name: dottxt-docs
+  transport: http
+  url: https://docs.dottxt.ai/mcp
+  auth: none
+  scope: documentation search/answers (Mintlify-hosted)
+  manifest: well-known/txt-docs-mcp.json
+candidate_tools:
+  description: >-
+    Candidate API-level tools derived one-per-operation from
+    openapi/txt-dottxt-openapi-original.json (status: candidate — dottxt does
+    not publish an API MCP server today).
+  status: candidate
+  tools:
+    - name: chat_completions
+      description: Create a schema-constrained chat completion (OpenAI-compatible, supports stream token/patch modes)
+      source_operation: openapi/txt-dottxt-openapi-original.json#chat_completions
+    - name: create_response
+      description: Create a model response (Open Responses compatible endpoint)
+      source_operation: openapi/txt-dottxt-openapi-original.json#create_response
+    - name: embeddings
+      description: Create embeddings for text input
+      source_operation: openapi/txt-dottxt-openapi-original.json#embeddings
+    - name: list_models
+      description: List models available to the API key
+      source_operation: openapi/txt-dottxt-openapi-original.json#list_models
+    - name: get_model
+      description: Retrieve a model
+      source_operation: openapi/txt-dottxt-openapi-original.json#get_model
+    - name: list_files
+      description: List uploaded JSONL batch files
+      source_operation: openapi/txt-dottxt-openapi-original.json#list_files
+    - name: upload_file
+      description: Upload a JSONL file for batch processing
+      source_operation: openapi/txt-dottxt-openapi-original.json#upload_file
+    - name: get_file
+      description: Retrieve file metadata
+      source_operation: openapi/txt-dottxt-openapi-original.json#get_file
+    - name: get_file_content
+      description: Retrieve file content
+      source_operation: openapi/txt-dottxt-openapi-original.json#get_file_content
+    - name: get_file_cost_estimate
+      description: Estimate the processing cost of an uploaded file
+      source_operation: openapi/txt-dottxt-openapi-original.json#get_file_cost_estimate
+    - name: delete_file
+      description: Delete an uploaded file
+      source_operation: openapi/txt-dottxt-openapi-original.json#delete_file
+    - name: list_batches
+      description: List batches (cursor pagination)
+      source_operation: openapi/txt-dottxt-openapi-original.json#list_batches
+    - name: create_batch
+      description: Create and start processing a batch from an uploaded file
+      source_operation: openapi/txt-dottxt-openapi-original.json#create_batch
+    - name: get_batch
+      description: Retrieve a batch and its progress
+      source_operation: openapi/txt-dottxt-openapi-original.json#get_batch
+    - name: get_batch_analytics
+      description: Get batch analytics
+      source_operation: openapi/txt-dottxt-openapi-original.json#get_batch_analytics
+    - name: get_batch_results
+      description: Get batch results
+      source_operation: openapi/txt-dottxt-openapi-original.json#get_batch_results
+    - name: cancel_batch
+      description: Cancel an in-flight batch
+      source_operation: openapi/txt-dottxt-openapi-original.json#cancel_batch
+    - name: retry_failed_batch_requests
+      description: Retry all failed requests in a batch
+      source_operation: openapi/txt-dottxt-openapi-original.json#retry_failed_batch_requests
+    - name: retry_specific_requests
+      description: Retry specific requests in a batch
+      source_operation: openapi/txt-dottxt-openapi-original.json#retry_specific_requests
+    - name: delete_batch
+      description: Delete a batch
+      source_operation: openapi/txt-dottxt-openapi-original.json#delete_batch

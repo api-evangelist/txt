@@ -1,0 +1,24 @@
+{
+  "provider": "txt",
+  "sources": [
+    "txt-batches-api-openapi.yml",
+    "txt-chat-api-openapi.yml",
+    "txt-embeddings-api-openapi.yml",
+    "txt-files-api-openapi.yml",
+    "txt-models-api-openapi.yml",
+    "txt-responses-api-api-openapi.yml"
+  ],
+  "outputs": [
+    "txt-batches-api-openapi.yml",
+    "txt-chat-api-openapi.yml",
+    "txt-embeddings-api-openapi.yml",
+    "txt-files-api-openapi.yml",
+    "txt-models-api-openapi.yml",
+    "txt-responses-api-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

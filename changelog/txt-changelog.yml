@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: searched
+source: https://dottxt.ai/announcements
+docs: https://dottxt.ai/announcements
+description: >-
+  .txt publishes no dated API changelog; the company Announcements page is the
+  dated change feed for the platform (product launches and partnerships), and
+  the engineering blog at blog.dottxt.ai carries technical posts. Recent
+  entries captured verbatim from the announcements page on 2026-07-21.
+versioning:
+  scheme: uri-path (/v1); no dated API versioning
+  current: v1
+  detail: lifecycle/txt-lifecycle.yml
+entries:
+  - date: '2026-04-22'
+    title: Announcing api.dottxt.ai
+    kind: launch
+    notes: Public launch of the hosted dottxt API platform (pay-per-token structured generation).
+  - date: '2026-04-13'
+    title: Doubleword, Powered by .txt
+    kind: partnership
+    notes: Doubleword operates the production inference stack behind the dottxt API (launch partner).
+  - date: '2026-02-24'
+    title: 'AWS x .txt: Structured outputs in Amazon SageMaker'
+    kind: partnership
+  - date: '2025-06-17'
+    title: 'LiquidAI x .txt: Function calling on the edge'
+    kind: partnership
+  - date: '2025-04-02'
+    title: 'DeeplearningAI x .txt: Getting Structured LLM Outputs'
+    kind: education
+  - date: '2024-10-22'
+    title: 'HuggingFace x .txt: Structured generation in Rust with outlines-core'
+    kind: partnership

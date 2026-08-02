@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: generated
+source: >-
+  Packaged Agent Skills generated from the published dottxt OpenAPI
+  (openapi/txt-dottxt-openapi-original.json) and the docs
+  (docs.dottxt.ai/quickstart, /api/chat-completions, /json-schema/streaming).
+  Every operation cited exists verbatim in the spec; cross-cutting rules cite
+  conventions/, errors/, and authentication/. No provider-published skills or
+  AGENTS.md were found on the dottxt-ai GitHub org or docs.
+skills:
+  - file: txt-structured-extraction.md
+    name: Extract structured data with a schema contract
+    api: openapi/txt-dottxt-openapi-original.json
+    operations: [list_models, chat_completions]
+  - file: txt-stream-structured-fields.md
+    name: Stream structured output field-by-field (JSON Patch)
+    api: openapi/txt-dottxt-openapi-original.json
+    operations: [chat_completions]
+  - file: txt-batch-structured-processing.md
+    name: Run bulk structured generation as a batch
+    api: openapi/txt-dottxt-openapi-original.json
+    operations: [upload_file, get_file_cost_estimate, create_batch, get_batch, get_batch_results, retry_failed_batch_requests, get_batch_analytics]

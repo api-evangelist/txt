@@ -1,0 +1,54 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  Verified against the public package registries (PyPI JSON API, npm registry,
+  crates.io API) and the dottxt-ai GitHub org on 2026-07-21. npm has no
+  first-party dottxt package (registry.npmjs.org/dottxt -> 404); the docs
+  quickstart routes TypeScript users through the Vercel AI SDK pointed at the
+  OpenAI-compatible base URL.
+packages:
+  - language: python
+    registry: pypi
+    name: dottxt
+    version: 0.3.0
+    url: https://pypi.org/project/dottxt/
+    source: https://github.com/dottxt-ai/dottxt-python
+    install: pip install dottxt
+    official: true
+    notes: >-
+      The official library for the .txt platform: DotTxt/AsyncDotTxt clients,
+      OpenAI-compatible chat/models namespaces, JSON Patch field streaming, and
+      the `dottxt` CLI entry point (see cli/txt-cli.yml).
+  - language: python
+    registry: pypi
+    name: outlines
+    version: 1.3.2
+    url: https://pypi.org/project/outlines/
+    source: https://github.com/dottxt-ai/outlines
+    install: pip install outlines
+    official: true
+    notes: >-
+      Flagship open-source structured-generation library (14.7k GitHub stars,
+      65M+ downloads claimed on dottxt.ai); runs structured generation against
+      any inference stack rather than calling the hosted dottxt API.
+  - language: python
+    registry: pypi
+    name: outlines-core
+    version: 0.2.14
+    url: https://pypi.org/project/outlines-core/
+    source: https://github.com/dottxt-ai/outlines-core
+    install: pip install outlines-core
+    official: true
+    notes: Rust-backed core for faster structured generation (Python bindings).
+  - language: rust
+    registry: crates.io
+    name: outlines-core
+    version: 0.2.14
+    url: https://crates.io/crates/outlines-core
+    source: https://github.com/dottxt-ai/outlines-core
+    install: cargo add outlines-core
+    official: true
+not_found:
+  - registry: npm
+    name: dottxt
+    status: 404
