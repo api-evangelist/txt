@@ -218,6 +218,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/txt-dottxt-overlay.yaml
 - type: Website
   url: https://dottxt.ai
 - type: Documentation
