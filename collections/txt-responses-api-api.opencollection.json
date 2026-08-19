@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "dottxt batches responses-api API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "responses-api",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create response",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dottxt.ai/v1/responses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a model response for the given input.\n\nThis endpoint implements the Open Responses compatible API, providing enhanced capabilities including:\n\n- **Reasoning models** with controllable effort via `reasoning` parameter\n- **Stateful conversations** via `previous_response_id` for maintaining context across turns\n- **Flexible input** - accepts either a string or array of messages\n- **Text output configuration** via `text` parameter for structured outputs\n- **Context window management** via `t"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

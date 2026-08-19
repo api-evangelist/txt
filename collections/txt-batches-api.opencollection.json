@@ -1,0 +1,219 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "dottxt batches API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "batches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dottxt.ai/v1/batches",
+            "params": [
+              {
+                "name": "pagination",
+                "value": "",
+                "type": "query",
+                "description": "Pagination parameters"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter batches by endpoint or input filename (case-insensitive substring match)"
+              },
+              {
+                "name": "include",
+                "value": "analytics",
+                "type": "query",
+                "description": "Comma-separated list of related resources to include. Supported: \"analytics\""
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of your batches, newest first.\n\nUse cursor-based pagination: pass `last_id` from the response as the `after` parameter to fetch the next page."
+        },
+        {
+          "info": {
+            "name": "Create batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dottxt.ai/v1/batches",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create and start processing a batch from an uploaded file.\n\nThe batch will begin processing immediately. Use `GET /batches/{batch_id}` to monitor progress."
+        },
+        {
+          "info": {
+            "name": "Retrieve batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dottxt.ai/v1/batches/:batch_id",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path",
+                "description": "The batch ID returned when the batch was created."
+              }
+            ]
+          },
+          "docs": "Retrieve the current status and details of a batch.\n\nPoll this endpoint to monitor progress. Results are streamed to `output_file_id` as they complete - you can start downloading results before the batch finishes."
+        },
+        {
+          "info": {
+            "name": "Delete batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dottxt.ai/v1/batches/:batch_id",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path",
+                "description": "The batch ID returned when the batch was created."
+              }
+            ]
+          },
+          "docs": "Permanently delete a batch and all its associated data.\n\nThis action cannot be undone. The input file is not deleted."
+        },
+        {
+          "info": {
+            "name": "Get batch analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dottxt.ai/v1/batches/:batch_id/analytics",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path",
+                "description": "The batch ID returned when the batch was created."
+              }
+            ]
+          },
+          "docs": "Retrieve aggregated metrics for a batch including token usage, costs, and latency statistics.\n\nAnalytics update in real-time as requests complete."
+        },
+        {
+          "info": {
+            "name": "Cancel batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dottxt.ai/v1/batches/:batch_id/cancel",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path",
+                "description": "The batch ID returned when the batch was created."
+              }
+            ]
+          },
+          "docs": "Cancel an in-progress batch.\n\nPending requests will not be processed. Requests already in progress will complete. The batch status will transition to `cancelling` then `cancelled`."
+        },
+        {
+          "info": {
+            "name": "Get batch results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dottxt.ai/v1/batches/:batch_id/results",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path",
+                "description": "The batch ID returned when the batch was created."
+              },
+              {
+                "name": "pagination",
+                "value": "",
+                "type": "query",
+                "description": "Pagination parameters (limit and skip)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter by custom_id (case-insensitive substring match)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by request status (completed, failed, pending, in_progress)"
+              }
+            ]
+          },
+          "docs": "Stream batch results with merged input/output data as JSONL.\n\nEach line contains the original input body, response body (for completed requests), error message (for failed requests), and current status. Results are filtered to show exactly one entry per input template (excluding superseded requests from escalation races).\n\nSupports pagination via `limit` and `skip` query parameters, and filtering by `custom_id` via the `search` parameter."
+        },
+        {
+          "info": {
+            "name": "Retry failed requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dottxt.ai/v1/batches/:batch_id/retry",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path",
+                "description": "The batch ID returned when the batch was created."
+              }
+            ]
+          },
+          "docs": "Retry all failed requests in a batch.\n\nFailed requests are reset to pending and will be processed again. Use this after fixing transient issues or increasing rate limits."
+        },
+        {
+          "info": {
+            "name": "Retry specific requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dottxt.ai/v1/batches/:batch_id/retry-requests",
+            "params": [
+              {
+                "name": "batch_id",
+                "value": "",
+                "type": "path",
+                "description": "The batch ID returned when the batch was created."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retry specific failed requests by their IDs.\n\nUse this for fine-grained control over which requests to retry, rather than retrying all failures."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

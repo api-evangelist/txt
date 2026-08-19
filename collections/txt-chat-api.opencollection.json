@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "dottxt batches chat API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "chat",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create chat completion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dottxt.ai/v1/chat/completions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a model response for the given chat conversation.\n\nThe conversation is provided as an array of messages, where each message has a `role` (system, user, assistant, or tool) and `content`.\n\nSet `stream: true` to receive partial responses as server-sent events."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1785 @@
+{
+  "item": [
+    {
+      "id": "0c1d28d3-8d8e-47cf-a6f8-2978674fda68",
+      "name": "batches",
+      "description": {
+        "content": "Process large volumes of requests asynchronously.\n\nBatch processing is ideal when you:\n- Have many requests that don't need immediate responses\n- Want to process data in bulk (e.g., embeddings for a document corpus)\n- Are running offline evaluations or data pipelines\n\nChoose your completion window: 1 hour or 24 hours. You can track progress, cancel in-flight batches, and retry failed requests.\n\n[Getting started with the Batch API →](https://docs.doubleword.ai/batches/getting-started-with-batched-api)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c3e2b7b6-3f84-4ffb-88e0-5a01615dcc64",
+          "name": "List batches",
+          "request": {
+            "name": "List batches",
+            "description": {
+              "content": "Returns a paginated list of your batches, newest first.\n\nUse cursor-based pagination: pass `last_id` from the response as the `after` parameter to fetch the next page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string,null>",
+                  "description": "(Required) Pagination parameters"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer,null-int64>",
+                  "description": "(Required) Pagination parameters"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string,null>",
+                  "description": "Search query to filter batches by endpoint or input filename (case-insensitive substring match)"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string,null>",
+                  "description": "Comma-separated list of related resources to include. Supported: \"analytics\""
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3f07c007-a4cd-4587-8ce5-54c6f9d8b12d",
+              "name": "List of batches. Check `has_more` to determine if additional pages exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string,null>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer,null-int64>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string,null>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "analytics"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"batch-abc123\",\n      \"object\": \"batch\",\n      \"endpoint\": \"/v1/chat/completions\",\n      \"input_file_id\": \"file-abc123\",\n      \"completion_window\": \"24h\",\n      \"status\": \"completed\",\n      \"created_at\": 1703187200,\n      \"request_counts\": {\n        \"completed\": 98,\n        \"failed\": 2,\n        \"total\": 100\n      },\n      \"analytics\": null,\n      \"cancelled_at\": 9799,\n      \"cancelling_at\": 1458,\n      \"completed_at\": 1703190800,\n      \"error_file_id\": \"string\",\n      \"errors\": null,\n      \"expired_at\": 6420,\n      \"expires_at\": 7193,\n      \"failed_at\": 4698,\n      \"finalizing_at\": 5531,\n      \"in_progress_at\": 9319,\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"output_file_id\": \"file-xyz789\"\n    },\n    {\n      \"id\": \"batch-abc123\",\n      \"object\": \"batch\",\n      \"endpoint\": \"/v1/chat/completions\",\n      \"input_file_id\": \"file-abc123\",\n      \"completion_window\": \"24h\",\n      \"status\": \"completed\",\n      \"created_at\": 1703187200,\n      \"request_counts\": {\n        \"completed\": 98,\n        \"failed\": 2,\n        \"total\": 100\n      },\n      \"analytics\": null,\n      \"cancelled_at\": 8570,\n      \"cancelling_at\": 7662,\n      \"completed_at\": 1703190800,\n      \"error_file_id\": \"string\",\n      \"errors\": null,\n      \"expired_at\": 5875,\n      \"expires_at\": 9199,\n      \"failed_at\": 2226,\n      \"finalizing_at\": 1432,\n      \"in_progress_at\": 8689,\n      \"metadata\": {\n        \"key_0\": \"string\"\n      },\n      \"output_file_id\": \"file-xyz789\"\n    }\n  ],\n  \"has_more\": false,\n  \"first_id\": \"batch-abc123\",\n  \"last_id\": \"batch-abc123\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51c1ed4b-d28a-40d8-bcc2-ff304b1a8858",
+              "name": "An unexpected error occurred. Retry the request or contact support if the issue persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string,null>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer,null-int64>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string,null>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "analytics"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2bee61bb-d685-492b-b2ba-5bbb4deeb69e",
+          "name": "Create batch",
+          "request": {
+            "name": "Create batch",
+            "description": {
+              "content": "Create and start processing a batch from an uploaded file.\n\nThe batch will begin processing immediately. Use `GET /batches/{batch_id}` to monitor progress.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input_file_id\": \"<string>\",\n  \"endpoint\": \"<string>\",\n  \"completion_window\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "49ab8c31-a12b-43c4-8439-9fb730148a58",
+              "name": "Batch created and queued for processing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"completion_window\": \"24h\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"input_file_id\": \"file-abc123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"batch-abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"completed\",\n  \"created_at\": 1703187200,\n  \"request_counts\": {\n    \"completed\": 98,\n    \"failed\": 2,\n    \"total\": 100\n  },\n  \"analytics\": null,\n  \"cancelled_at\": 851,\n  \"cancelling_at\": 3100,\n  \"completed_at\": 1703190800,\n  \"error_file_id\": \"string\",\n  \"errors\": null,\n  \"expired_at\": 7824,\n  \"expires_at\": 4957,\n  \"failed_at\": 2618,\n  \"finalizing_at\": 7356,\n  \"in_progress_at\": 744,\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"output_file_id\": \"file-xyz789\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f726e2e5-d229-4614-944e-0b9cbced964f",
+              "name": "Invalid request - check that the endpoint and completion_window are valid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"completion_window\": \"24h\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"input_file_id\": \"file-abc123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c5806236-4143-4858-a137-c6abc6c10958",
+              "name": "Input file not found or you don't have access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"completion_window\": \"24h\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"input_file_id\": \"file-abc123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1321bcf1-9112-46a7-b02a-a95f1a164336",
+              "name": "An unexpected error occurred. Retry the request or contact support if the issue persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"completion_window\": \"24h\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"input_file_id\": \"file-abc123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db119ed1-31e1-42eb-a885-de8b56ad504f",
+          "name": "Retrieve batch",
+          "request": {
+            "name": "Retrieve batch",
+            "description": {
+              "content": "Retrieve the current status and details of a batch.\n\nPoll this endpoint to monitor progress. Results are streamed to `output_file_id` as they complete - you can start downloading results before the batch finishes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches",
+                ":batch_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) The batch ID returned when the batch was created."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b3721956-1a0c-4bc3-bd87-12191ccc7fe8",
+              "name": "Batch details including status, progress counts, and output file IDs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"batch-abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"completed\",\n  \"created_at\": 1703187200,\n  \"request_counts\": {\n    \"completed\": 98,\n    \"failed\": 2,\n    \"total\": 100\n  },\n  \"analytics\": null,\n  \"cancelled_at\": 851,\n  \"cancelling_at\": 3100,\n  \"completed_at\": 1703190800,\n  \"error_file_id\": \"string\",\n  \"errors\": null,\n  \"expired_at\": 7824,\n  \"expires_at\": 4957,\n  \"failed_at\": 2618,\n  \"finalizing_at\": 7356,\n  \"in_progress_at\": 744,\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"output_file_id\": \"file-xyz789\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97864cff-2bb0-4e20-837d-7d0e36339c77",
+              "name": "Batch not found or you don't have access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "835759be-2e19-4ad9-aa47-750b49c558e8",
+              "name": "An unexpected error occurred. Retry the request or contact support if the issue persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f30be655-6025-4348-9fea-687b6d19744e",
+          "name": "Delete batch",
+          "request": {
+            "name": "Delete batch",
+            "description": {
+              "content": "Permanently delete a batch and all its associated data.\n\nThis action cannot be undone. The input file is not deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches",
+                ":batch_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) The batch ID returned when the batch was created."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8b4e37c6-6aa9-41e2-af0a-f52b16f36e07",
+              "name": "Batch deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "688ccaec-b5ad-4eec-9825-2882a62b32f4",
+              "name": "Invalid batch ID format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a41e6218-43b1-4a94-886b-c6df3e276007",
+              "name": "Batch not found or you don't have access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dcbea417-ea34-4798-a653-282fa4c8db8b",
+              "name": "An unexpected error occurred. Retry the request or contact support if the issue persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cdcb9a10-5f1f-4aa9-9f7a-cbf3cbd610e5",
+          "name": "Get batch analytics",
+          "request": {
+            "name": "Get batch analytics",
+            "description": {
+              "content": "Retrieve aggregated metrics for a batch including token usage, costs, and latency statistics.\n\nAnalytics update in real-time as requests complete.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches",
+                ":batch_id",
+                "analytics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) The batch ID returned when the batch was created."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cbb30708-8cd7-4cdf-969d-012efbdc7420",
+              "name": "Batch analytics with token counts, costs, and performance metrics.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"avg_duration_ms\": 1250.5,\n  \"avg_ttfb_ms\": 150.2,\n  \"total_completion_tokens\": 25000,\n  \"total_cost\": \"0.75\",\n  \"total_prompt_tokens\": 50000,\n  \"total_requests\": 100,\n  \"total_tokens\": 75000\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6fd2af5-7d2f-401b-ba33-c7d023039a84",
+              "name": "Batch not found or you don't have access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3e2e406e-2daa-4edd-a086-fc254e2b4b23",
+              "name": "An unexpected error occurred. Retry the request or contact support if the issue persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ae7b367-e495-4104-aecd-71416ce30793",
+          "name": "Cancel batch",
+          "request": {
+            "name": "Cancel batch",
+            "description": {
+              "content": "Cancel an in-progress batch.\n\nPending requests will not be processed. Requests already in progress will complete. The batch status will transition to `cancelling` then `cancelled`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches",
+                ":batch_id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) The batch ID returned when the batch was created."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e7578bc-7e5d-483e-a96d-160e54bc6b1a",
+              "name": "Cancellation initiated. The batch will finish processing in-flight requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"batch-abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"completed\",\n  \"created_at\": 1703187200,\n  \"request_counts\": {\n    \"completed\": 98,\n    \"failed\": 2,\n    \"total\": 100\n  },\n  \"analytics\": null,\n  \"cancelled_at\": 851,\n  \"cancelling_at\": 3100,\n  \"completed_at\": 1703190800,\n  \"error_file_id\": \"string\",\n  \"errors\": null,\n  \"expired_at\": 7824,\n  \"expires_at\": 4957,\n  \"failed_at\": 2618,\n  \"finalizing_at\": 7356,\n  \"in_progress_at\": 744,\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"output_file_id\": \"file-xyz789\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59e45168-eee1-4e4c-a30c-32c470e60905",
+              "name": "Batch not found or you don't have access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3a9ea50c-a799-4029-b33d-61b2fa5e4341",
+              "name": "An unexpected error occurred. Retry the request or contact support if the issue persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "daba37ab-8113-46fa-9ce2-7759c6c99593",
+          "name": "Get batch results",
+          "request": {
+            "name": "Get batch results",
+            "description": {
+              "content": "Stream batch results with merged input/output data as JSONL.\n\nEach line contains the original input body, response body (for completed requests), error message (for failed requests), and current status. Results are filtered to show exactly one entry per input template (excluding superseded requests from escalation races).\n\nSupports pagination via `limit` and `skip` query parameters, and filtering by `custom_id` via the `search` parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches",
+                ":batch_id",
+                "results"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer,null-int64>",
+                  "description": "(Required) Pagination parameters (limit and skip)"
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "<integer,null-int64>",
+                  "description": "(Required) Pagination parameters (limit and skip)"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string,null>",
+                  "description": "Search query to filter by custom_id (case-insensitive substring match)"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string,null>",
+                  "description": "Filter by request status (completed, failed, pending, in_progress)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) The batch ID returned when the batch was created."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/x-ndjson"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f0c9ee9-aff1-48cc-8051-dafb1707a6f9",
+              "name": "Batch results as newline-delimited JSON. Check the `X-Incomplete` header to determine if more results exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer,null-int64>"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<integer,null-int64>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string,null>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/x-ndjson"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/x-ndjson"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "43b97f6b-2d0a-4360-a8b3-0c47e8127a98",
+              "name": "Batch not found or you don't have access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer,null-int64>"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<integer,null-int64>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string,null>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ee39c352-e8fb-47cf-ab3f-bc7e32711b56",
+              "name": "An unexpected error occurred. Retry the request or contact support if the issue persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer,null-int64>"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<integer,null-int64>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string,null>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string,null>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "835d7d17-d0b1-4aa7-98cf-c3eab18308f4",
+          "name": "Retry failed requests",
+          "request": {
+            "name": "Retry failed requests",
+            "description": {
+              "content": "Retry all failed requests in a batch.\n\nFailed requests are reset to pending and will be processed again. Use this after fixing transient issues or increasing rate limits.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches",
+                ":batch_id",
+                "retry"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) The batch ID returned when the batch was created."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9ac6f48c-3a98-4772-a6cf-41cf9db48364",
+              "name": "Failed requests queued for retry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "retry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"batch-abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"completed\",\n  \"created_at\": 1703187200,\n  \"request_counts\": {\n    \"completed\": 98,\n    \"failed\": 2,\n    \"total\": 100\n  },\n  \"analytics\": null,\n  \"cancelled_at\": 851,\n  \"cancelling_at\": 3100,\n  \"completed_at\": 1703190800,\n  \"error_file_id\": \"string\",\n  \"errors\": null,\n  \"expired_at\": 7824,\n  \"expires_at\": 4957,\n  \"failed_at\": 2618,\n  \"finalizing_at\": 7356,\n  \"in_progress_at\": 744,\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"output_file_id\": \"file-xyz789\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9e11e2c-a309-4f4a-90fe-b8899832bc80",
+              "name": "No failed requests to retry in this batch.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "retry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "55e5529a-04be-445f-8ec7-76859b721a67",
+              "name": "Batch not found or you don't have access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "retry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c8df1674-0c78-413a-abc0-f73d6d1b4473",
+              "name": "An unexpected error occurred. Retry the request or contact support if the issue persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "retry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "511d8b43-adab-4e3a-80be-0adbb7711ed9",
+          "name": "Retry specific requests",
+          "request": {
+            "name": "Retry specific requests",
+            "description": {
+              "content": "Retry specific failed requests by their IDs.\n\nUse this for fine-grained control over which requests to retry, rather than retrying all failures.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches",
+                ":batch_id",
+                "retry-requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batch_id",
+                  "description": "(Required) The batch ID returned when the batch was created."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5c4cac2e-45e3-4708-b9ad-4bc2bd0a3cde",
+              "name": "Specified requests queued for retry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "retry-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_ids\": [\n    \"req-abc123\",\n    \"req-def456\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"batch-abc123\",\n  \"object\": \"batch\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"input_file_id\": \"file-abc123\",\n  \"completion_window\": \"24h\",\n  \"status\": \"completed\",\n  \"created_at\": 1703187200,\n  \"request_counts\": {\n    \"completed\": 98,\n    \"failed\": 2,\n    \"total\": 100\n  },\n  \"analytics\": null,\n  \"cancelled_at\": 851,\n  \"cancelling_at\": 3100,\n  \"completed_at\": 1703190800,\n  \"error_file_id\": \"string\",\n  \"errors\": null,\n  \"expired_at\": 7824,\n  \"expires_at\": 4957,\n  \"failed_at\": 2618,\n  \"finalizing_at\": 7356,\n  \"in_progress_at\": 744,\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"output_file_id\": \"file-xyz789\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d256e5d-233e-4cf6-8ae0-6e3f2df7271d",
+              "name": "No valid request IDs provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "retry-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_ids\": [\n    \"req-abc123\",\n    \"req-def456\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5a0fd610-adae-4029-9787-2e81097eafc9",
+              "name": "Batch not found or you don't have access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "retry-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_ids\": [\n    \"req-abc123\",\n    \"req-def456\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ae02801d-d63a-4159-be0b-187ed2b47dec",
+              "name": "An unexpected error occurred. Retry the request or contact support if the issue persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batch_id",
+                    "retry-requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batch_id",
+                      "description": "(Required) The batch ID returned when the batch was created."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_ids\": [\n    \"req-abc123\",\n    \"req-def456\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.dottxt.ai/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c074a99d-117c-4990-b24c-17bbcb13b553",
+    "name": "dottxt batches API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The dottxt API",
+      "type": "text/plain"
+    }
+  }
+}

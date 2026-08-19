@@ -1,0 +1,496 @@
+{
+  "item": [
+    {
+      "id": "9688f1bb-75ab-476f-b373-8fc8cc78c8f0",
+      "name": "responses-api",
+      "description": {
+        "content": "Create model responses with enhanced capabilities.\n\nOpen Responses compatible endpoint providing advanced features:\n\n- **Reasoning models** - Control computational effort with `reasoning` parameter\n- **Stateful conversations** - Maintain context across turns with `previous_response_id`\n- **Flexible input** - Use simple strings or full message arrays\n- **Text output configuration** - Structured outputs via `text` parameter\n- **Context management** - Handle overflow with `truncation` parameter\n\n[Open Responses API Reference →](https://www.openresponses.org/reference)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7ec00448-a442-4be5-b7e4-be7e9daaf5a9",
+          "name": "Create response",
+          "request": {
+            "name": "Create response",
+            "description": {
+              "content": "Creates a model response for the given input.\n\nThis endpoint implements the Open Responses compatible API, providing enhanced capabilities including:\n\n- **Reasoning models** with controllable effort via `reasoning` parameter\n- **Stateful conversations** via `previous_response_id` for maintaining context across turns\n- **Flexible input** - accepts either a string or array of messages\n- **Text output configuration** via `text` parameter for structured outputs\n- **Context window management** via `truncation` parameter\n\nSet `stream: true` to receive partial responses as server-sent events.\n\n[Open Responses API Reference →](https://www.openresponses.org/reference)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "responses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"frequency_penalty\": \"<number,null-float>\",\n  \"include\": \"<string,null>\",\n  \"instructions\": \"<string,null>\",\n  \"max_output_tokens\": \"<integer,null-int32>\",\n  \"metadata\": {},\n  \"modalities\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"parallel_tool_calls\": \"<boolean,null>\",\n  \"presence_penalty\": \"<number,null-float>\",\n  \"previous_response_id\": \"<string,null>\",\n  \"reasoning\": {},\n  \"reasoning_effort\": \"<string,null>\",\n  \"stop\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"store\": \"<boolean,null>\",\n  \"stream\": \"<boolean,null>\",\n  \"stream_options\": {},\n  \"temperature\": \"<number,null-float>\",\n  \"text\": {},\n  \"tool_choice\": {},\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string,null>\",\n        \"parameters\": {}\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string,null>\",\n        \"parameters\": {}\n      }\n    }\n  ],\n  \"top_p\": \"<number,null-float>\",\n  \"truncation\": \"<string,null>\",\n  \"user\": \"<string,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f117728f-f541-40f1-91b3-1a6a0a67ca66",
+              "name": "Response generated successfully. When streaming, returns a series of SSE events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"What is a doubleword?\",\n  \"max_output_tokens\": 256,\n  \"model\": \"gpt-4o\",\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"resp-abc123\",\n  \"object\": \"response\",\n  \"created_at\": 1703187200,\n  \"completed_at\": 1703187205,\n  \"model\": \"gpt-4o\",\n  \"status\": \"completed\",\n  \"output\": [\n    {\n      \"content\": \"A doubleword is a data unit that is twice the size of a standard word in computer architecture.\",\n      \"role\": \"assistant\",\n      \"type\": \"message\"\n    },\n    {\n      \"content\": \"A doubleword is a data unit that is twice the size of a standard word in computer architecture.\",\n      \"role\": \"assistant\",\n      \"type\": \"message\"\n    }\n  ],\n  \"usage\": {\n    \"completion_tokens\": 36,\n    \"prompt_tokens\": 24,\n    \"total_tokens\": 60\n  },\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a2e0406-6230-4c39-afdd-aa471259345c",
+              "name": "Invalid request - check that your input is properly formatted and all required fields are present.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"What is a doubleword?\",\n  \"max_output_tokens\": 256,\n  \"model\": \"gpt-4o\",\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_api_key\",\n    \"message\": \"Invalid API key provided\",\n    \"type\": \"authentication_error\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e70be1db-1002-4221-8244-e6579c3cdcdf",
+              "name": "Invalid or missing API key. Ensure your `Authorization` header is set to `Bearer YOUR_API_KEY`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"What is a doubleword?\",\n  \"max_output_tokens\": 256,\n  \"model\": \"gpt-4o\",\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_api_key\",\n    \"message\": \"Invalid API key provided\",\n    \"type\": \"authentication_error\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47dde1f0-c48c-40fb-9a35-43cdcfd4cac1",
+              "name": "Insufficient credits. Top up your account to continue making requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"What is a doubleword?\",\n  \"max_output_tokens\": 256,\n  \"model\": \"gpt-4o\",\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_api_key\",\n    \"message\": \"Invalid API key provided\",\n    \"type\": \"authentication_error\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb9d5dfd-ceeb-4528-ab9a-1db1aa94f574",
+              "name": "Your API key does not have access to the requested model.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"What is a doubleword?\",\n  \"max_output_tokens\": 256,\n  \"model\": \"gpt-4o\",\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_api_key\",\n    \"message\": \"Invalid API key provided\",\n    \"type\": \"authentication_error\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edcf95a8-bb5d-4a1e-8546-1d3fe270f6bf",
+              "name": "The specified model does not exist. Use `GET /models` to list available models.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"What is a doubleword?\",\n  \"max_output_tokens\": 256,\n  \"model\": \"gpt-4o\",\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_api_key\",\n    \"message\": \"Invalid API key provided\",\n    \"type\": \"authentication_error\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9643855b-1fda-4a0f-bc5e-9905ce1f852a",
+              "name": "Rate limit exceeded. Back off and retry after a short delay.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"What is a doubleword?\",\n  \"max_output_tokens\": 256,\n  \"model\": \"gpt-4o\",\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_api_key\",\n    \"message\": \"Invalid API key provided\",\n    \"type\": \"authentication_error\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63d5d569-cd18-4b51-b84b-adc77b6919b2",
+              "name": "An unexpected error occurred. Retry the request or contact support if the issue persists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "responses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"What is a doubleword?\",\n  \"max_output_tokens\": 256,\n  \"model\": \"gpt-4o\",\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid_api_key\",\n    \"message\": \"Invalid API key provided\",\n    \"type\": \"authentication_error\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.dottxt.ai/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "73376d69-d899-4419-90b1-0f7b38fa86ae",
+    "name": "dottxt batches responses-api API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The dottxt API",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "dottxt batches files API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dottxt.ai/v1/files",
+            "params": [
+              {
+                "name": "pagination",
+                "value": "",
+                "type": "query",
+                "description": "Pagination parameters"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order by created_at (asc or desc, default desc)"
+              },
+              {
+                "name": "purpose",
+                "value": "",
+                "type": "query",
+                "description": "Only return files with the given purpose"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter files by filename (case-insensitive substring match)"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of your uploaded files.\n\nUse cursor-based pagination: pass `last_id` from the response as the `after` parameter to fetch the next page."
+        },
+        {
+          "info": {
+            "name": "Upload file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dottxt.ai/v1/files",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload a JSONL file for batch processing.\n\nEach line must be a valid JSON object containing `custom_id`, `method`, `url`, and `body` fields. The `model` field in the body must reference a model your API key has access to."
+        },
+        {
+          "info": {
+            "name": "Retrieve file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dottxt.ai/v1/files/:file_id",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The file ID returned when the file was uploaded."
+              }
+            ]
+          },
+          "docs": "Returns metadata about a specific file, including its size, creation time, and purpose."
+        },
+        {
+          "info": {
+            "name": "Delete file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dottxt.ai/v1/files/:file_id",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The file ID returned when the file was uploaded."
+              }
+            ]
+          },
+          "docs": "Permanently delete a file.\n\nDeleting a file also deletes any batches that were created from it. This action cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Retrieve file content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dottxt.ai/v1/files/:file_id/content",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The file ID returned when the file was uploaded."
+              },
+              {
+                "name": "pagination",
+                "value": "",
+                "type": "query",
+                "description": "Pagination parameters"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter by custom_id (case-insensitive substring match)"
+              }
+            ]
+          },
+          "docs": "Download the content of a file as JSONL.\n\nFor input files, returns the original request templates. For output files, returns the completed responses. Supports pagination via `limit` and `offset` query parameters."
+        },
+        {
+          "info": {
+            "name": "Get file cost estimate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dottxt.ai/v1/files/:file_id/cost-estimate",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the file to estimate cost for"
+              },
+              {
+                "name": "completion_window",
+                "value": "",
+                "type": "query",
+                "description": "Completion window (priority) for batch processing (e.g., \"24h\", \"1h\", \"48h\")\nIf not provided, defaults to \"24h\""
+              }
+            ]
+          },
+          "docs": "Estimate the cost of processing a batch file before creating a batch.\n\nReturns a breakdown by model including estimated input/output tokens and cost. Useful for validating costs before committing to a batch run."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
