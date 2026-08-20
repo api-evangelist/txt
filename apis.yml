@@ -43,6 +43,15 @@ tags:
 - Artificial Intelligence
 - LLM
 - Structured Outputs
+- JSON-Schema
+- Inference
+- Developer Tools
+- Machine-Learning
+tags_raw:
+- Company
+- Artificial Intelligence
+- LLM
+- Structured Outputs
 - JSON Schema
 - Inference
 - Developer Tools
@@ -71,6 +80,8 @@ apis:
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
+  - Batches
+  tags_raw:
   - batches
   properties:
   - type: OpenAPI
@@ -99,6 +110,8 @@ apis:
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
+  - Chat
+  tags_raw:
   - chat
   properties:
   - type: OpenAPI
@@ -125,6 +138,8 @@ apis:
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
+  - Embeddings
+  tags_raw:
   - embeddings
   properties:
   - type: OpenAPI
@@ -154,6 +169,8 @@ apis:
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
+  - File
+  tags_raw:
   - files
   properties:
   - type: OpenAPI
@@ -172,6 +189,8 @@ apis:
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
+  - Models
+  tags_raw:
   - models
   properties:
   - type: OpenAPI
@@ -204,6 +223,8 @@ apis:
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
+  - Responses API
+  tags_raw:
   - responses-api
   properties:
   - type: OpenAPI
