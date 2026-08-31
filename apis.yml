@@ -235,7 +235,7 @@ apis:
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
-  - Responses API
+  - responses-api
   tags_raw:
   - responses-api
   properties:
