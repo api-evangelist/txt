@@ -1,15 +1,11 @@
 aid: txt
 name: .txt
-description: >-
-  .txt (dottxt) is the structured-generation company behind the open-source
-  Outlines library (65M+ downloads). Its hosted platform, the dottxt API at
-  api.dottxt.ai, is an OpenAI-compatible pay-per-token API whose defining
-  contract is schema enforcement: a JSON Schema passed in response_format is
-  compiled and enforced by constrained decoding, so model outputs are
-  guaranteed valid — including field-by-field RFC 6902 JSON Patch streaming,
-  Open Responses support, embeddings, and JSONL batch processing. Founded by
-  the Outlines maintainers and backed by Seedcamp; inference is operated with
-  launch partner Doubleword.
+description: '.txt (dottxt) is the structured-generation company behind the open-source Outlines library
+  (65M+ downloads). Its hosted platform, the dottxt API at api.dottxt.ai, is an OpenAI-compatible pay-per-token
+  API whose defining contract is schema enforcement: a JSON Schema passed in response_format is compiled
+  and enforced by constrained decoding, so model outputs are guaranteed valid — including field-by-field
+  RFC 6902 JSON Patch streaming, Open Responses support, embeddings, and JSONL batch processing. Founded
+  by the Outlines maintainers and backed by Seedcamp; inference is operated with launch partner Doubleword.'
 url: https://raw.githubusercontent.com/api-evangelist/txt/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -49,7 +45,7 @@ x-enrichment:
   artifacts_added: 21
   pass: local-v1
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-09-16'
 image: https://cdn.sanity.io/images/z84vkf2c/production/f496d7868262fbf26f71782579181541f75b45b5-100x50.svg
 tags:
 - Company
@@ -72,13 +68,12 @@ tags_raw:
 apis:
 - aid: txt:txt-batches-api
   name: .txt batches API
-  description: >-
-    Process large volumes of requests asynchronously.
+  description: 'Process large volumes of requests asynchronously.
 
 
     Batch processing is ideal when you:
 
-    - Have many requests that don't need immediate responses
+    - Have many requests that don''t need immediate responses
 
     - Want to process data in bulk (e.g., embeddings for a document corpus)
 
@@ -89,7 +84,7 @@ apis:
     and retry failed requests.
 
 
-    [Getting started with the Batch API →](https://docs.doubleword.ai/batches/getting-started-with-batched-api)
+    [Getting started with the Batch API →](https://docs.doubleword.ai/batches/getting-started-with-batched-api)'
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
@@ -105,8 +100,7 @@ apis:
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-chat-api
   name: .txt chat API
-  description: >-
-    Create model responses for chat conversations.
+  description: 'Create model responses for chat conversations.
 
 
     Supports:
@@ -119,7 +113,7 @@ apis:
 
     - **Streaming** for real-time token delivery
 
-    - **Sampling parameters** like temperature, top_p, and frequency penalties
+    - **Sampling parameters** like temperature, top_p, and frequency penalties'
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
@@ -135,8 +129,7 @@ apis:
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-embeddings-api
   name: .txt embeddings API
-  description: >-
-    Generate vector representations of text.
+  description: 'Generate vector representations of text.
 
 
     Use embeddings for:
@@ -147,7 +140,7 @@ apis:
 
     - **Classification** - categorize text based on similarity to examples
 
-    - **Recommendations** - suggest related content
+    - **Recommendations** - suggest related content'
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
@@ -163,8 +156,7 @@ apis:
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-files-api
   name: .txt files API
-  description: >-
-    Upload and manage JSONL files for batch processing.
+  description: 'Upload and manage JSONL files for batch processing.
 
 
     Each line in the file should be a JSON object with:
@@ -178,7 +170,7 @@ apis:
     - `body` - the request payload
 
 
-    [Learn more about the JSONL file format →](https://docs.doubleword.ai/batches/jsonl-files)
+    [Learn more about the JSONL file format →](https://docs.doubleword.ai/batches/jsonl-files)'
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
@@ -194,11 +186,10 @@ apis:
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-models-api
   name: .txt models API
-  description: >-
-    List and retrieve information about available models.
+  description: 'List and retrieve information about available models.
 
 
-    Use these endpoints to discover which models you have access to and their capabilities.
+    Use these endpoints to discover which models you have access to and their capabilities.'
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
@@ -213,9 +204,8 @@ apis:
   - type: APIReference
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-responses-api-api
-  name: .txt responses-api API
-  description: >-
-    Create model responses with enhanced capabilities.
+  name: .txt responses-api
+  description: 'Create model responses with enhanced capabilities.
 
 
     Open Responses compatible endpoint providing advanced features:
@@ -232,7 +222,7 @@ apis:
     - **Context management** - Handle overflow with `truncation` parameter
 
 
-    [Open Responses API Reference →](https://www.openresponses.org/reference)
+    [Open Responses API Reference →](https://www.openresponses.org/reference)'
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
@@ -284,7 +274,10 @@ common:
   url: well-known/txt-well-known.yml
 - type: X-MCPServerCandidate
   url: mcp/txt-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate
+    — a tool list derived from the published API contracts, not an existing server. The scorer already
+    read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type
+    surfaces with a server that does not exist.'
 - type: Conformance
   url: conformance/txt-conformance.yml
 - type: ErrorCatalog
