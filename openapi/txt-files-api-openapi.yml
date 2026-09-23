@@ -1,13 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: dottxt batches files API
+  title: dottxt Files API
   description: The dottxt API
   version: 1.0.0
 servers:
 - url: https://api.dottxt.ai/v1
   description: dottxt API
 tags:
-- name: files
+- name: Files
   description: 'Upload and manage JSONL files for batch processing.
 
 
@@ -22,12 +22,12 @@ tags:
     - `body` - the request payload
 
 
-    [Learn more about the JSONL file format →](https://docs.doubleword.ai/batches/jsonl-files)'
+    Learn more about the JSONL file format →'
 paths:
   /files:
     get:
       tags:
-      - files
+      - Files
       summary: List files
       description: 'Returns a paginated list of your uploaded files.
 
@@ -94,7 +94,7 @@ paths:
           description: An unexpected error occurred. Retry the request or contact support if the issue persists.
     post:
       tags:
-      - files
+      - Files
       summary: Upload file
       description: 'Upload a JSONL file for batch processing.
 
@@ -125,7 +125,7 @@ paths:
   /files/{file_id}:
     get:
       tags:
-      - files
+      - Files
       summary: Retrieve file
       description: Returns metadata about a specific file, including its size, creation time, and purpose.
       operationId: get_file
@@ -149,7 +149,7 @@ paths:
           description: An unexpected error occurred. Retry the request or contact support if the issue persists.
     delete:
       tags:
-      - files
+      - Files
       summary: Delete file
       description: 'Permanently delete a file.
 
@@ -177,7 +177,7 @@ paths:
   /files/{file_id}/content:
     get:
       tags:
-      - files
+      - Files
       summary: Retrieve file content
       description: 'Download the content of a file as JSONL.
 
@@ -243,7 +243,7 @@ paths:
   /files/{file_id}/cost-estimate:
     get:
       tags:
-      - files
+      - Files
       summary: Get file cost estimate
       description: 'Estimate the cost of processing a batch file before creating a batch.
 
@@ -280,6 +280,58 @@ paths:
           description: An unexpected error occurred. Retry the request or contact support if the issue persists.
 components:
   schemas:
+    FileCostEstimate:
+      type: object
+      description: Response for file cost estimation
+      required:
+      - file_id
+      - total_requests
+      - total_estimated_input_tokens
+      - total_estimated_output_tokens
+      - total_estimated_cost
+      - models
+      properties:
+        file_id:
+          type: string
+          example: file-abc123
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelCostBreakdown'
+          description: Per-model breakdown
+        total_estimated_cost:
+          type: string
+          description: Total cost as string to preserve decimal precision
+          example: '0.75'
+        total_estimated_input_tokens:
+          type: integer
+          format: int64
+          example: 50000
+        total_estimated_output_tokens:
+          type: integer
+          format: int64
+          example: 25000
+        total_requests:
+          type: integer
+          format: int64
+          example: 100
+      example:
+        file_id: file-abc123
+        models:
+        - estimated_cost: '0.75'
+          estimated_input_tokens: 50000
+          estimated_output_tokens: 25000
+          model: Qwen/Qwen3-30B-A3B-FP8
+          request_count: 100
+        total_estimated_cost: '0.75'
+        total_estimated_input_tokens: 50000
+        total_estimated_output_tokens: 25000
+        total_requests: 100
+    ListObject:
+      type: string
+      description: Object type for lists - always "list"
+      enum:
+      - list
     FileDeleteResponse:
       type: object
       description: Response for file deletion
@@ -305,18 +357,6 @@ components:
       description: Object type - always "file"
       enum:
       - file
-    Purpose:
-      type: string
-      description: Purpose for file
-      enum:
-      - batch
-      - batch_output
-      - batch_error
-    ListObject:
-      type: string
-      description: Object type for lists - always "list"
-      enum:
-      - list
     FileListResponse:
       type: object
       description: Response for file list
@@ -391,53 +431,13 @@ components:
         estimated_output_tokens: 25000
         model: Qwen/Qwen3-30B-A3B-FP8
         request_count: 100
-    FileCostEstimate:
-      type: object
-      description: Response for file cost estimation
-      required:
-      - file_id
-      - total_requests
-      - total_estimated_input_tokens
-      - total_estimated_output_tokens
-      - total_estimated_cost
-      - models
-      properties:
-        file_id:
-          type: string
-          example: file-abc123
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelCostBreakdown'
-          description: Per-model breakdown
-        total_estimated_cost:
-          type: string
-          description: Total cost as string to preserve decimal precision
-          example: '0.75'
-        total_estimated_input_tokens:
-          type: integer
-          format: int64
-          example: 50000
-        total_estimated_output_tokens:
-          type: integer
-          format: int64
-          example: 25000
-        total_requests:
-          type: integer
-          format: int64
-          example: 100
-      example:
-        file_id: file-abc123
-        models:
-        - estimated_cost: '0.75'
-          estimated_input_tokens: 50000
-          estimated_output_tokens: 25000
-          model: Qwen/Qwen3-30B-A3B-FP8
-          request_count: 100
-        total_estimated_cost: '0.75'
-        total_estimated_input_tokens: 50000
-        total_estimated_output_tokens: 25000
-        total_requests: 100
+    Purpose:
+      type: string
+      description: Purpose for file
+      enum:
+      - batch
+      - batch_output
+      - batch_error
     FileResponse:
       type: object
       description: File object response (OpenAI-compatible)

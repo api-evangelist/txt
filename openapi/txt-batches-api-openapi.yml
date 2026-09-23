@@ -1,13 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: dottxt batches API
+  title: dottxt Batches API
   description: The dottxt API
   version: 1.0.0
 servers:
 - url: https://api.dottxt.ai/v1
   description: dottxt API
 tags:
-- name: batches
+- name: Batches
   description: 'Process large volumes of requests asynchronously.
 
 
@@ -23,12 +23,12 @@ tags:
     Choose your completion window: 1 hour or 24 hours. You can track progress, cancel in-flight batches, and retry failed requests.
 
 
-    [Getting started with the Batch API →](https://docs.doubleword.ai/batches/getting-started-with-batched-api)'
+    Getting started with the Batch API →'
 paths:
   /batches:
     get:
       tags:
-      - batches
+      - Batches
       summary: List batches
       description: 'Returns a paginated list of your batches, newest first.
 
@@ -90,7 +90,7 @@ paths:
           description: An unexpected error occurred. Retry the request or contact support if the issue persists.
     post:
       tags:
-      - batches
+      - Batches
       summary: Create batch
       description: 'Create and start processing a batch from an uploaded file.
 
@@ -119,7 +119,7 @@ paths:
   /batches/{batch_id}:
     get:
       tags:
-      - batches
+      - Batches
       summary: Retrieve batch
       description: 'Retrieve the current status and details of a batch.
 
@@ -146,7 +146,7 @@ paths:
           description: An unexpected error occurred. Retry the request or contact support if the issue persists.
     delete:
       tags:
-      - batches
+      - Batches
       summary: Delete batch
       description: 'Permanently delete a batch and all its associated data.
 
@@ -172,7 +172,7 @@ paths:
   /batches/{batch_id}/analytics:
     get:
       tags:
-      - batches
+      - Batches
       summary: Get batch analytics
       description: 'Retrieve aggregated metrics for a batch including token usage, costs, and latency statistics.
 
@@ -200,7 +200,7 @@ paths:
   /batches/{batch_id}/cancel:
     post:
       tags:
-      - batches
+      - Batches
       summary: Cancel batch
       description: 'Cancel an in-progress batch.
 
@@ -228,7 +228,7 @@ paths:
   /batches/{batch_id}/results:
     get:
       tags:
-      - batches
+      - Batches
       summary: Get batch results
       description: 'Stream batch results with merged input/output data as JSONL.
 
@@ -305,7 +305,7 @@ paths:
   /batches/{batch_id}/retry:
     post:
       tags:
-      - batches
+      - Batches
       summary: Retry failed requests
       description: 'Retry all failed requests in a batch.
 
@@ -335,7 +335,7 @@ paths:
   /batches/{batch_id}/retry-requests:
     post:
       tags:
-      - batches
+      - Batches
       summary: Retry specific requests
       description: 'Retry specific failed requests by their IDs.
 
@@ -370,30 +370,6 @@ paths:
           description: An unexpected error occurred. Retry the request or contact support if the issue persists.
 components:
   schemas:
-    RequestCounts:
-      type: object
-      description: Request counts for a batch
-      required:
-      - total
-      - completed
-      - failed
-      properties:
-        completed:
-          type: integer
-          format: int64
-          example: 98
-        failed:
-          type: integer
-          format: int64
-          example: 2
-        total:
-          type: integer
-          format: int64
-          example: 100
-      example:
-        completed: 98
-        failed: 2
-        total: 100
     BatchResponse:
       type: object
       description: Batch object response (OpenAI-compatible)
@@ -569,6 +545,50 @@ components:
         total_prompt_tokens: 50000
         total_requests: 100
         total_tokens: 75000
+    RequestCounts:
+      type: object
+      description: Request counts for a batch
+      required:
+      - total
+      - completed
+      - failed
+      properties:
+        completed:
+          type: integer
+          format: int64
+          example: 98
+        failed:
+          type: integer
+          format: int64
+          example: 2
+        total:
+          type: integer
+          format: int64
+          example: 100
+      example:
+        completed: 98
+        failed: 2
+        total: 100
+    ListObjectType:
+      type: string
+      description: Object type for lists - always "list"
+      enum:
+      - list
+    RetryRequestsRequest:
+      type: object
+      description: Request body for retrying specific requests
+      required:
+      - request_ids
+      properties:
+        request_ids:
+          type: array
+          items:
+            type: string
+          description: Array of request IDs to retry
+      example:
+        request_ids:
+        - req-abc123
+        - req-def456
     BatchListResponse:
       type: object
       description: Response for batch list
@@ -645,16 +665,6 @@ components:
         code: invalid_request
         line: 5
         message: Invalid JSON on line 5
-    BatchObjectType:
-      type: string
-      description: Object type - always "batch"
-      enum:
-      - batch
-    ListObjectType:
-      type: string
-      description: Object type for lists - always "list"
-      enum:
-      - list
     BatchErrors:
       type: object
       description: Batch-level errors
@@ -708,21 +718,11 @@ components:
         completion_window: 24h
         endpoint: /v1/chat/completions
         input_file_id: file-abc123
-    RetryRequestsRequest:
-      type: object
-      description: Request body for retrying specific requests
-      required:
-      - request_ids
-      properties:
-        request_ids:
-          type: array
-          items:
-            type: string
-          description: Array of request IDs to retry
-      example:
-        request_ids:
-        - req-abc123
-        - req-def456
+    BatchObjectType:
+      type: string
+      description: Object type - always "batch"
+      enum:
+      - batch
   securitySchemes:
     BearerAuth:
       type: http

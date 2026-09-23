@@ -1,13 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: dottxt batches embeddings API
+  title: dottxt Embeddings API
   description: The dottxt API
   version: 1.0.0
 servers:
 - url: https://api.dottxt.ai/v1
   description: dottxt API
 tags:
-- name: embeddings
+- name: Embeddings
   description: 'Generate vector representations of text.
 
 
@@ -24,7 +24,7 @@ paths:
   /embeddings:
     post:
       tags:
-      - embeddings
+      - Embeddings
       summary: Create embeddings
       description: 'Creates embedding vectors representing the input text.
 
@@ -90,54 +90,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    OpenAIErrorResponse:
-      type: object
-      description: OpenAI-compatible error response.
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/OpenAIError'
-          description: The error details.
-      example:
-        error:
-          code: invalid_api_key
-          message: Invalid API key provided
-          type: authentication_error
-    EmbeddingRequest:
-      type: object
-      description: Request body for embeddings.
-      required:
-      - model
-      - input
-      properties:
-        dimensions:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The number of dimensions the resulting output embeddings should have.
-        encoding_format:
-          type:
-          - string
-          - 'null'
-          description: The format to return the embeddings in ("float" or "base64").
-          example: float
-        input:
-          $ref: '#/components/schemas/EmbeddingInput'
-          description: Input text to embed. Can be a string or array of strings.
-        model:
-          type: string
-          description: ID of the model to use.
-          example: Qwen/Qwen3-30B-A3B-FP8
-        user:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier representing your end-user.
-      example:
-        input: What is a doubleword?
-        model: Qwen/Qwen3-30B-A3B-FP8
     EmbeddingUsage:
       type: object
       description: Usage statistics for embedding requests.
@@ -158,44 +110,6 @@ components:
       example:
         prompt_tokens: 6
         total_tokens: 6
-    EmbeddingResponse:
-      type: object
-      description: Response from embeddings.
-      required:
-      - object
-      - data
-      - model
-      - usage
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EmbeddingData'
-          description: The list of embeddings generated.
-        model:
-          type: string
-          description: The model used for generating embeddings.
-          example: Qwen/Qwen3-30B-A3B-FP8
-        object:
-          type: string
-          description: The object type, always "list".
-          example: list
-        usage:
-          $ref: '#/components/schemas/EmbeddingUsage'
-          description: Usage statistics for the request.
-      example:
-        data:
-        - embedding:
-          - 0.0023
-          - -0.0134
-          - 0.0256
-          index: 0
-          object: embedding
-        model: Qwen/Qwen3-30B-A3B-FP8
-        object: list
-        usage:
-          prompt_tokens: 6
-          total_tokens: 6
     EmbeddingInput:
       oneOf:
       - type: string
@@ -236,6 +150,58 @@ components:
         - 0.0256
         index: 0
         object: embedding
+    OpenAIErrorResponse:
+      type: object
+      description: OpenAI-compatible error response.
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/OpenAIError'
+          description: The error details.
+      example:
+        error:
+          code: invalid_api_key
+          message: Invalid API key provided
+          type: authentication_error
+    EmbeddingResponse:
+      type: object
+      description: Response from embeddings.
+      required:
+      - object
+      - data
+      - model
+      - usage
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmbeddingData'
+          description: The list of embeddings generated.
+        model:
+          type: string
+          description: The model used for generating embeddings.
+          example: Qwen/Qwen3-30B-A3B-FP8
+        object:
+          type: string
+          description: The object type, always "list".
+          example: list
+        usage:
+          $ref: '#/components/schemas/EmbeddingUsage'
+          description: Usage statistics for the request.
+      example:
+        data:
+        - embedding:
+          - 0.0023
+          - -0.0134
+          - 0.0256
+          index: 0
+          object: embedding
+        model: Qwen/Qwen3-30B-A3B-FP8
+        object: list
+        usage:
+          prompt_tokens: 6
+          total_tokens: 6
     OpenAIError:
       type: object
       description: OpenAI-compatible error details.
@@ -266,6 +232,40 @@ components:
         code: invalid_api_key
         message: Invalid API key provided
         type: authentication_error
+    EmbeddingRequest:
+      type: object
+      description: Request body for embeddings.
+      required:
+      - model
+      - input
+      properties:
+        dimensions:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The number of dimensions the resulting output embeddings should have.
+        encoding_format:
+          type:
+          - string
+          - 'null'
+          description: The format to return the embeddings in ("float" or "base64").
+          example: float
+        input:
+          $ref: '#/components/schemas/EmbeddingInput'
+          description: Input text to embed. Can be a string or array of strings.
+        model:
+          type: string
+          description: ID of the model to use.
+          example: Qwen/Qwen3-30B-A3B-FP8
+        user:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier representing your end-user.
+      example:
+        input: What is a doubleword?
+        model: Qwen/Qwen3-30B-A3B-FP8
   securitySchemes:
     BearerAuth:
       type: http

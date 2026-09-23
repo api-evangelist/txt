@@ -1,12 +1,7 @@
 {
   "provider": "txt",
   "sources": [
-    "txt-batches-api-openapi.yml",
-    "txt-chat-api-openapi.yml",
-    "txt-embeddings-api-openapi.yml",
-    "txt-files-api-openapi.yml",
-    "txt-models-api-openapi.yml",
-    "txt-responses-api-api-openapi.yml"
+    "_original/txt-dottxt-openapi-original.json"
   ],
   "outputs": [
     "txt-batches-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "txt-dottxt-openapi-original.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "txt-batches-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "txt-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "txt-embeddings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "txt-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "txt-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "txt-responses-api-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

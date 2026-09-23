@@ -1,13 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: dottxt batches models API
+  title: dottxt Models API
   description: The dottxt API
   version: 1.0.0
 servers:
 - url: https://api.dottxt.ai/v1
   description: dottxt API
 tags:
-- name: models
+- name: Models
   description: 'List and retrieve information about available models.
 
 
@@ -16,7 +16,7 @@ paths:
   /models:
     get:
       tags:
-      - models
+      - Models
       summary: List models
       description: 'Lists the models available to your API key.
 
@@ -41,7 +41,7 @@ paths:
   /models/{model}:
     get:
       tags:
-      - models
+      - Models
       summary: Retrieve model
       description: Retrieves information about a specific model.
       operationId: get_model
@@ -75,20 +75,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    OpenAIErrorResponse:
-      type: object
-      description: OpenAI-compatible error response.
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/OpenAIError'
-          description: The error details.
-      example:
-        error:
-          code: invalid_api_key
-          message: Invalid API key provided
-          type: authentication_error
     ModelObject:
       type: object
       description: A model object.
@@ -120,29 +106,20 @@ components:
         id: Qwen/Qwen3-30B-A3B-FP8
         object: model
         owned_by: qwen
-    ModelsListResponse:
+    OpenAIErrorResponse:
       type: object
-      description: Response for listing available models.
+      description: OpenAI-compatible error response.
       required:
-      - object
-      - data
+      - error
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelObject'
-          description: The list of available models.
-        object:
-          type: string
-          description: The object type, always "list".
-          example: list
+        error:
+          $ref: '#/components/schemas/OpenAIError'
+          description: The error details.
       example:
-        data:
-        - created: 1703187200
-          id: Qwen/Qwen3-30B-A3B-FP8
-          object: model
-          owned_by: qwen
-        object: list
+        error:
+          code: invalid_api_key
+          message: Invalid API key provided
+          type: authentication_error
     OpenAIError:
       type: object
       description: OpenAI-compatible error details.
@@ -173,6 +150,29 @@ components:
         code: invalid_api_key
         message: Invalid API key provided
         type: authentication_error
+    ModelsListResponse:
+      type: object
+      description: Response for listing available models.
+      required:
+      - object
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelObject'
+          description: The list of available models.
+        object:
+          type: string
+          description: The object type, always "list".
+          example: list
+      example:
+        data:
+        - created: 1703187200
+          id: Qwen/Qwen3-30B-A3B-FP8
+          object: model
+          owned_by: qwen
+        object: list
   securitySchemes:
     BearerAuth:
       type: http
