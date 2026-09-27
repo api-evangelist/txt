@@ -52,10 +52,10 @@ tags:
 - Artificial Intelligence
 - LLM
 - Structured Outputs
-- JSON-Schema
+- JSON Schema
 - Inference
 - Developer Tools
-- Machine-Learning
+- Machine Learning
 tags_raw:
 - Company
 - Artificial Intelligence
@@ -65,9 +65,11 @@ tags_raw:
 - Inference
 - Developer Tools
 - Machine Learning
+- JSON-Schema
+- Machine-Learning
 apis:
 - aid: txt:txt-batches-api
-  name: .txt batches API
+  name: .txt Batches API
   description: 'Process large volumes of requests asynchronously.
 
 
@@ -99,7 +101,7 @@ apis:
   - type: APIReference
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-chat-api
-  name: .txt chat API
+  name: .txt Chat API
   description: 'Create model responses for chat conversations.
 
 
@@ -128,7 +130,7 @@ apis:
   - type: APIReference
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-embeddings-api
-  name: .txt embeddings API
+  name: .txt Embeddings API
   description: 'Generate vector representations of text.
 
 
@@ -155,7 +157,7 @@ apis:
   - type: APIReference
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-files-api
-  name: .txt files API
+  name: .txt Files API
   description: 'Upload and manage JSONL files for batch processing.
 
 
@@ -185,7 +187,7 @@ apis:
   - type: APIReference
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-models-api
-  name: .txt models API
+  name: .txt Models API
   description: 'List and retrieve information about available models.
 
 
@@ -204,7 +206,7 @@ apis:
   - type: APIReference
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-responses-api-api
-  name: .txt responses-api
+  name: .txt Responses API
   description: 'Create model responses with enhanced capabilities.
 
 
