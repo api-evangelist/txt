@@ -96,333 +96,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    FunctionCall:
-      type: object
-      description: A function call within a tool call.
-      required:
-      - name
-      - arguments
-      properties:
-        arguments:
-          type: string
-          description: The arguments to pass to the function, as a JSON string.
-          example: '{"location": "San Francisco"}'
-        name:
-          type: string
-          description: The name of the function to call.
-          example: get_weather
-      example:
-        arguments: '{"location": "San Francisco"}'
-        name: get_weather
-    OpenAIErrorResponse:
-      type: object
-      description: OpenAI-compatible error response.
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/OpenAIError'
-          description: The error details.
-      example:
-        error:
-          code: invalid_api_key
-          message: Invalid API key provided
-          type: authentication_error
-    ToolCall:
-      type: object
-      description: A tool call made by the model.
-      required:
-      - id
-      - type
-      - function
-      properties:
-        function:
-          $ref: '#/components/schemas/FunctionCall'
-          description: The function that was called.
-        id:
-          type: string
-          description: The ID of the tool call.
-          example: call_abc123
-        type:
-          type: string
-          description: The type of tool (currently only "function").
-          example: function
-      example:
-        function:
-          arguments: '{"location": "San Francisco"}'
-          name: get_weather
-        id: call_abc123
-        type: function
-    FunctionDefinition:
-      type: object
-      description: Definition of a function that can be called by the model.
-      required:
-      - name
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-          description: A description of what the function does.
-          example: Get the current weather in a location
-        name:
-          type: string
-          description: The name of the function.
-          example: get_weather
-        parameters:
-          description: The parameters the function accepts, as a JSON Schema object.
-      example:
-        description: Get the current weather in a location
-        name: get_weather
-        parameters:
-          properties:
-            location:
-              description: City name
-              type: string
-          required:
-          - location
-          type: object
-    ResponseItem:
-      type: object
-      description: A single item in the response output array.
-      required:
-      - type
-      properties:
-        content:
-          type:
-          - string
-          - 'null'
-          description: The content of the message (for message-type items).
-          example: A doubleword is a data unit that is twice the size of a standard word.
-        role:
-          type:
-          - string
-          - 'null'
-          description: The role of the message (for message-type items).
-          example: assistant
-        tool_calls:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolCall'
-          description: Tool calls made by the model (for message-type items with tool calls).
-        type:
-          type: string
-          description: The type of item (e.g., "message", "function_call").
-          example: message
-      example:
-        content: A doubleword is a data unit that is twice the size of a standard word in computer architecture.
-        role: assistant
-        type: message
-    ChatMessage:
-      type: object
-      description: A message in a chat conversation.
-      required:
-      - role
-      properties:
-        content:
-          type:
-          - string
-          - 'null'
-          description: The content of the message.
-          example: What is a doubleword?
-        name:
-          type:
-          - string
-          - 'null'
-          description: The name of the author (for function/tool messages).
-        role:
-          type: string
-          description: The role of the message author (system, user, assistant, tool, function).
-          example: user
-        tool_call_id:
-          type:
-          - string
-          - 'null'
-          description: The ID of the tool call this message is responding to.
-        tool_calls:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ToolCall'
-          description: Tool calls made by the assistant.
-      example:
-        content: What is a doubleword?
-        role: user
-    ResponseInput:
-      oneOf:
-      - type: string
-        description: A single string input.
-      - type: array
-        items:
-          $ref: '#/components/schemas/ChatMessage'
-        description: An array of messages (chat-style conversation).
-      description: Input for response requests - can be a single string or array of messages.
-      example: What is a doubleword?
-    Tool:
-      type: object
-      description: A tool that the model may call.
-      required:
-      - type
-      - function
-      properties:
-        function:
-          $ref: '#/components/schemas/FunctionDefinition'
-          description: The function definition.
-        type:
-          type: string
-          description: The type of tool (currently only "function").
-          example: function
-      example:
-        function:
-          description: Get the current weather in a location
-          name: get_weather
-          parameters:
-            properties:
-              location:
-                description: City name
-                type: string
-            required:
-            - location
-            type: object
-        type: function
-    Usage:
-      type: object
-      description: Token usage statistics.
-      required:
-      - prompt_tokens
-      - completion_tokens
-      - total_tokens
-      properties:
-        completion_tokens:
-          type: integer
-          format: int32
-          description: Number of tokens in the generated completion.
-          example: 36
-        prompt_tokens:
-          type: integer
-          format: int32
-          description: Number of tokens in the prompt.
-          example: 24
-        total_tokens:
-          type: integer
-          format: int32
-          description: Total number of tokens used in the request.
-          example: 60
-      example:
-        completion_tokens: 36
-        prompt_tokens: 24
-        total_tokens: 60
-    OpenAIError:
-      type: object
-      description: OpenAI-compatible error details.
-      required:
-      - message
-      - type
-      properties:
-        code:
-          type:
-          - string
-          - 'null'
-          description: The error code.
-          example: invalid_api_key
-        message:
-          type: string
-          description: The error message.
-          example: Invalid API key provided
-        param:
-          type:
-          - string
-          - 'null'
-          description: The parameter that caused the error, if applicable.
-        type:
-          type: string
-          description: The type of error.
-          example: authentication_error
-      example:
-        code: invalid_api_key
-        message: Invalid API key provided
-        type: authentication_error
-    ResponseObject:
-      type: object
-      description: Response from creating a response.
-      required:
-      - id
-      - object
-      - created_at
-      - completed_at
-      - model
-      - status
-      - output
-      - usage
-      - temperature
-      - top_p
-      properties:
-        completed_at:
-          type: integer
-          format: int64
-          description: The Unix timestamp of when the response was completed.
-          example: 1703187205
-        created_at:
-          type: integer
-          format: int64
-          description: The Unix timestamp of when the response was created.
-          example: 1703187200
-        id:
-          type: string
-          description: A unique identifier for the response.
-          example: resp-abc123
-        metadata:
-          description: Developer-defined tags and values.
-        model:
-          type: string
-          description: The model used for generating the response.
-          example: gpt-4o
-        object:
-          type: string
-          description: The object type, always "response".
-          example: response
-        output:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseItem'
-          description: The output items generated by the model.
-        status:
-          type: string
-          description: The status of the response. Can be "completed", "incomplete", "cancelled", or "failed".
-          example: completed
-        temperature:
-          type: number
-          format: float
-          description: The temperature used for sampling (echoed from request).
-          example: 0.7
-        top_p:
-          type: number
-          format: float
-          description: The nucleus sampling parameter used (echoed from request).
-          example: 1
-        usage:
-          $ref: '#/components/schemas/Usage'
-          description: Usage statistics for the response request.
-      example:
-        completed_at: 1703187205
-        created_at: 1703187200
-        id: resp-abc123
-        model: gpt-4o
-        object: response
-        output:
-        - content: A doubleword is a data unit that is twice the size of a standard word in computer architecture.
-          role: assistant
-          type: message
-        status: completed
-        temperature: 0.7
-        top_p: 1
-        usage:
-          completion_tokens: 25
-          prompt_tokens: 10
-          total_tokens: 35
     ResponseRequest:
       type: object
       description: Request body for creating a response.
@@ -562,6 +235,333 @@ components:
         max_output_tokens: 256
         model: gpt-4o
         temperature: 0.7
+    FunctionCall:
+      type: object
+      description: A function call within a tool call.
+      required:
+      - name
+      - arguments
+      properties:
+        arguments:
+          type: string
+          description: The arguments to pass to the function, as a JSON string.
+          example: '{"location": "San Francisco"}'
+        name:
+          type: string
+          description: The name of the function to call.
+          example: get_weather
+      example:
+        arguments: '{"location": "San Francisco"}'
+        name: get_weather
+    OpenAIErrorResponse:
+      type: object
+      description: OpenAI-compatible error response.
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/OpenAIError'
+          description: The error details.
+      example:
+        error:
+          code: invalid_api_key
+          message: Invalid API key provided
+          type: authentication_error
+    Usage:
+      type: object
+      description: Token usage statistics.
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+      properties:
+        completion_tokens:
+          type: integer
+          format: int32
+          description: Number of tokens in the generated completion.
+          example: 36
+        prompt_tokens:
+          type: integer
+          format: int32
+          description: Number of tokens in the prompt.
+          example: 24
+        total_tokens:
+          type: integer
+          format: int32
+          description: Total number of tokens used in the request.
+          example: 60
+      example:
+        completion_tokens: 36
+        prompt_tokens: 24
+        total_tokens: 60
+    ResponseInput:
+      oneOf:
+      - type: string
+        description: A single string input.
+      - type: array
+        items:
+          $ref: '#/components/schemas/ChatMessage'
+        description: An array of messages (chat-style conversation).
+      description: Input for response requests - can be a single string or array of messages.
+      example: What is a doubleword?
+    OpenAIError:
+      type: object
+      description: OpenAI-compatible error details.
+      required:
+      - message
+      - type
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+          description: The error code.
+          example: invalid_api_key
+        message:
+          type: string
+          description: The error message.
+          example: Invalid API key provided
+        param:
+          type:
+          - string
+          - 'null'
+          description: The parameter that caused the error, if applicable.
+        type:
+          type: string
+          description: The type of error.
+          example: authentication_error
+      example:
+        code: invalid_api_key
+        message: Invalid API key provided
+        type: authentication_error
+    ResponseItem:
+      type: object
+      description: A single item in the response output array.
+      required:
+      - type
+      properties:
+        content:
+          type:
+          - string
+          - 'null'
+          description: The content of the message (for message-type items).
+          example: A doubleword is a data unit that is twice the size of a standard word.
+        role:
+          type:
+          - string
+          - 'null'
+          description: The role of the message (for message-type items).
+          example: assistant
+        tool_calls:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolCall'
+          description: Tool calls made by the model (for message-type items with tool calls).
+        type:
+          type: string
+          description: The type of item (e.g., "message", "function_call").
+          example: message
+      example:
+        content: A doubleword is a data unit that is twice the size of a standard word in computer architecture.
+        role: assistant
+        type: message
+    FunctionDefinition:
+      type: object
+      description: Definition of a function that can be called by the model.
+      required:
+      - name
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: A description of what the function does.
+          example: Get the current weather in a location
+        name:
+          type: string
+          description: The name of the function.
+          example: get_weather
+        parameters:
+          description: The parameters the function accepts, as a JSON Schema object.
+      example:
+        description: Get the current weather in a location
+        name: get_weather
+        parameters:
+          properties:
+            location:
+              description: City name
+              type: string
+          required:
+          - location
+          type: object
+    Tool:
+      type: object
+      description: A tool that the model may call.
+      required:
+      - type
+      - function
+      properties:
+        function:
+          $ref: '#/components/schemas/FunctionDefinition'
+          description: The function definition.
+        type:
+          type: string
+          description: The type of tool (currently only "function").
+          example: function
+      example:
+        function:
+          description: Get the current weather in a location
+          name: get_weather
+          parameters:
+            properties:
+              location:
+                description: City name
+                type: string
+            required:
+            - location
+            type: object
+        type: function
+    ToolCall:
+      type: object
+      description: A tool call made by the model.
+      required:
+      - id
+      - type
+      - function
+      properties:
+        function:
+          $ref: '#/components/schemas/FunctionCall'
+          description: The function that was called.
+        id:
+          type: string
+          description: The ID of the tool call.
+          example: call_abc123
+        type:
+          type: string
+          description: The type of tool (currently only "function").
+          example: function
+      example:
+        function:
+          arguments: '{"location": "San Francisco"}'
+          name: get_weather
+        id: call_abc123
+        type: function
+    ResponseObject:
+      type: object
+      description: Response from creating a response.
+      required:
+      - id
+      - object
+      - created_at
+      - completed_at
+      - model
+      - status
+      - output
+      - usage
+      - temperature
+      - top_p
+      properties:
+        completed_at:
+          type: integer
+          format: int64
+          description: The Unix timestamp of when the response was completed.
+          example: 1703187205
+        created_at:
+          type: integer
+          format: int64
+          description: The Unix timestamp of when the response was created.
+          example: 1703187200
+        id:
+          type: string
+          description: A unique identifier for the response.
+          example: resp-abc123
+        metadata:
+          description: Developer-defined tags and values.
+        model:
+          type: string
+          description: The model used for generating the response.
+          example: gpt-4o
+        object:
+          type: string
+          description: The object type, always "response".
+          example: response
+        output:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseItem'
+          description: The output items generated by the model.
+        status:
+          type: string
+          description: The status of the response. Can be "completed", "incomplete", "cancelled", or "failed".
+          example: completed
+        temperature:
+          type: number
+          format: float
+          description: The temperature used for sampling (echoed from request).
+          example: 0.7
+        top_p:
+          type: number
+          format: float
+          description: The nucleus sampling parameter used (echoed from request).
+          example: 1
+        usage:
+          $ref: '#/components/schemas/Usage'
+          description: Usage statistics for the response request.
+      example:
+        completed_at: 1703187205
+        created_at: 1703187200
+        id: resp-abc123
+        model: gpt-4o
+        object: response
+        output:
+        - content: A doubleword is a data unit that is twice the size of a standard word in computer architecture.
+          role: assistant
+          type: message
+        status: completed
+        temperature: 0.7
+        top_p: 1
+        usage:
+          completion_tokens: 25
+          prompt_tokens: 10
+          total_tokens: 35
+    ChatMessage:
+      type: object
+      description: A message in a chat conversation.
+      required:
+      - role
+      properties:
+        content:
+          type:
+          - string
+          - 'null'
+          description: The content of the message.
+          example: What is a doubleword?
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the author (for function/tool messages).
+        role:
+          type: string
+          description: The role of the message author (system, user, assistant, tool, function).
+          example: user
+        tool_call_id:
+          type:
+          - string
+          - 'null'
+          description: The ID of the tool call this message is responding to.
+        tool_calls:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ToolCall'
+          description: Tool calls made by the assistant.
+      example:
+        content: What is a doubleword?
+        role: user
   securitySchemes:
     BearerAuth:
       type: http

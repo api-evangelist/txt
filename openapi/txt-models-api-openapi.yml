@@ -98,20 +98,36 @@ components:
           object: model
           owned_by: qwen
         object: list
-    OpenAIErrorResponse:
+    OpenAIError:
       type: object
-      description: OpenAI-compatible error response.
+      description: OpenAI-compatible error details.
       required:
-      - error
+      - message
+      - type
       properties:
-        error:
-          $ref: '#/components/schemas/OpenAIError'
-          description: The error details.
+        code:
+          type:
+          - string
+          - 'null'
+          description: The error code.
+          example: invalid_api_key
+        message:
+          type: string
+          description: The error message.
+          example: Invalid API key provided
+        param:
+          type:
+          - string
+          - 'null'
+          description: The parameter that caused the error, if applicable.
+        type:
+          type: string
+          description: The type of error.
+          example: authentication_error
       example:
-        error:
-          code: invalid_api_key
-          message: Invalid API key provided
-          type: authentication_error
+        code: invalid_api_key
+        message: Invalid API key provided
+        type: authentication_error
     ModelObject:
       type: object
       description: A model object.
@@ -143,36 +159,20 @@ components:
         id: Qwen/Qwen3-30B-A3B-FP8
         object: model
         owned_by: qwen
-    OpenAIError:
+    OpenAIErrorResponse:
       type: object
-      description: OpenAI-compatible error details.
+      description: OpenAI-compatible error response.
       required:
-      - message
-      - type
+      - error
       properties:
-        code:
-          type:
-          - string
-          - 'null'
-          description: The error code.
-          example: invalid_api_key
-        message:
-          type: string
-          description: The error message.
-          example: Invalid API key provided
-        param:
-          type:
-          - string
-          - 'null'
-          description: The parameter that caused the error, if applicable.
-        type:
-          type: string
-          description: The type of error.
-          example: authentication_error
+        error:
+          $ref: '#/components/schemas/OpenAIError'
+          description: The error details.
       example:
-        code: invalid_api_key
-        message: Invalid API key provided
-        type: authentication_error
+        error:
+          code: invalid_api_key
+          message: Invalid API key provided
+          type: authentication_error
   securitySchemes:
     BearerAuth:
       type: http

@@ -300,128 +300,6 @@ components:
         deleted: true
         id: file-abc123
         object: file
-    FileListResponse:
-      type: object
-      description: Response for file list
-      required:
-      - object
-      - data
-      - has_more
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/FileResponse'
-        first_id:
-          type:
-          - string
-          - 'null'
-          example: file-abc123
-        has_more:
-          type: boolean
-          example: false
-        last_id:
-          type:
-          - string
-          - 'null'
-          example: file-abc123
-        object:
-          $ref: '#/components/schemas/ListObject'
-      example:
-        data:
-        - bytes: 12045
-          created_at: 1703187200
-          filename: batch_requests.jsonl
-          id: file-abc123
-          object: file
-          purpose: batch
-        first_id: file-abc123
-        has_more: false
-        last_id: file-abc123
-        object: list
-    ModelCostBreakdown:
-      type: object
-      description: Per-model cost breakdown
-      required:
-      - model
-      - request_count
-      - estimated_input_tokens
-      - estimated_output_tokens
-      - estimated_cost
-      properties:
-        estimated_cost:
-          type: string
-          description: Cost as string to preserve decimal precision
-          example: '0.75'
-        estimated_input_tokens:
-          type: integer
-          format: int64
-          example: 50000
-        estimated_output_tokens:
-          type: integer
-          format: int64
-          example: 25000
-        model:
-          type: string
-          example: Qwen/Qwen3-30B-A3B-FP8
-        request_count:
-          type: integer
-          format: int64
-          example: 100
-      example:
-        estimated_cost: '0.75'
-        estimated_input_tokens: 50000
-        estimated_output_tokens: 25000
-        model: Qwen/Qwen3-30B-A3B-FP8
-        request_count: 100
-    Purpose:
-      type: string
-      description: Purpose for file
-      enum:
-      - batch
-      - batch_output
-      - batch_error
-    FileResponse:
-      type: object
-      description: File object response (OpenAI-compatible)
-      required:
-      - id
-      - object
-      - bytes
-      - created_at
-      - filename
-      - purpose
-      properties:
-        bytes:
-          type: integer
-          format: int64
-          example: 12045
-        created_at:
-          type: integer
-          format: int64
-          example: 1703187200
-        expires_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        filename:
-          type: string
-          example: batch_requests.jsonl
-        id:
-          type: string
-          example: file-abc123
-        object:
-          $ref: '#/components/schemas/ObjectType'
-        purpose:
-          $ref: '#/components/schemas/Purpose'
-      example:
-        bytes: 12045
-        created_at: 1703187200
-        filename: batch_requests.jsonl
-        id: file-abc123
-        object: file
-        purpose: batch
     FileCostEstimate:
       type: object
       description: Response for file cost estimation
@@ -469,16 +347,138 @@ components:
         total_estimated_input_tokens: 50000
         total_estimated_output_tokens: 25000
         total_requests: 100
-    ObjectType:
+    Purpose:
       type: string
-      description: Object type - always "file"
+      description: Purpose for file
       enum:
-      - file
+      - batch
+      - batch_output
+      - batch_error
     ListObject:
       type: string
       description: Object type for lists - always "list"
       enum:
       - list
+    ObjectType:
+      type: string
+      description: Object type - always "file"
+      enum:
+      - file
+    ModelCostBreakdown:
+      type: object
+      description: Per-model cost breakdown
+      required:
+      - model
+      - request_count
+      - estimated_input_tokens
+      - estimated_output_tokens
+      - estimated_cost
+      properties:
+        estimated_cost:
+          type: string
+          description: Cost as string to preserve decimal precision
+          example: '0.75'
+        estimated_input_tokens:
+          type: integer
+          format: int64
+          example: 50000
+        estimated_output_tokens:
+          type: integer
+          format: int64
+          example: 25000
+        model:
+          type: string
+          example: Qwen/Qwen3-30B-A3B-FP8
+        request_count:
+          type: integer
+          format: int64
+          example: 100
+      example:
+        estimated_cost: '0.75'
+        estimated_input_tokens: 50000
+        estimated_output_tokens: 25000
+        model: Qwen/Qwen3-30B-A3B-FP8
+        request_count: 100
+    FileResponse:
+      type: object
+      description: File object response (OpenAI-compatible)
+      required:
+      - id
+      - object
+      - bytes
+      - created_at
+      - filename
+      - purpose
+      properties:
+        bytes:
+          type: integer
+          format: int64
+          example: 12045
+        created_at:
+          type: integer
+          format: int64
+          example: 1703187200
+        expires_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        filename:
+          type: string
+          example: batch_requests.jsonl
+        id:
+          type: string
+          example: file-abc123
+        object:
+          $ref: '#/components/schemas/ObjectType'
+        purpose:
+          $ref: '#/components/schemas/Purpose'
+      example:
+        bytes: 12045
+        created_at: 1703187200
+        filename: batch_requests.jsonl
+        id: file-abc123
+        object: file
+        purpose: batch
+    FileListResponse:
+      type: object
+      description: Response for file list
+      required:
+      - object
+      - data
+      - has_more
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileResponse'
+        first_id:
+          type:
+          - string
+          - 'null'
+          example: file-abc123
+        has_more:
+          type: boolean
+          example: false
+        last_id:
+          type:
+          - string
+          - 'null'
+          example: file-abc123
+        object:
+          $ref: '#/components/schemas/ListObject'
+      example:
+        data:
+        - bytes: 12045
+          created_at: 1703187200
+          filename: batch_requests.jsonl
+          id: file-abc123
+          object: file
+          purpose: batch
+        first_id: file-abc123
+        has_more: false
+        last_id: file-abc123
+        object: list
   securitySchemes:
     BearerAuth:
       type: http

@@ -90,30 +90,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    EmbeddingInput:
-      oneOf:
-      - type: string
-        description: A single string to embed.
-      - type: array
-        items:
-          type: string
-        description: An array of strings to embed.
-      description: Input for embedding requests - can be a single string or array of strings.
-      example: What is a doubleword?
-    OpenAIErrorResponse:
-      type: object
-      description: OpenAI-compatible error response.
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/OpenAIError'
-          description: The error details.
-      example:
-        error:
-          code: invalid_api_key
-          message: Invalid API key provided
-          type: authentication_error
     EmbeddingResponse:
       type: object
       description: Response from embeddings.
@@ -152,56 +128,50 @@ components:
         usage:
           prompt_tokens: 6
           total_tokens: 6
-    EmbeddingData:
+    OpenAIErrorResponse:
       type: object
-      description: A single embedding result.
+      description: OpenAI-compatible error response.
       required:
-      - object
-      - index
-      - embedding
+      - error
       properties:
-        embedding:
-          type: array
-          items:
-            type: number
-            format: float
-          description: The embedding vector.
-        index:
-          type: integer
-          format: int32
-          description: The index of this embedding in the list.
-          example: 0
-        object:
+        error:
+          $ref: '#/components/schemas/OpenAIError'
+          description: The error details.
+      example:
+        error:
+          code: invalid_api_key
+          message: Invalid API key provided
+          type: authentication_error
+    OpenAIError:
+      type: object
+      description: OpenAI-compatible error details.
+      required:
+      - message
+      - type
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+          description: The error code.
+          example: invalid_api_key
+        message:
           type: string
-          description: The object type, always "embedding".
-          example: embedding
+          description: The error message.
+          example: Invalid API key provided
+        param:
+          type:
+          - string
+          - 'null'
+          description: The parameter that caused the error, if applicable.
+        type:
+          type: string
+          description: The type of error.
+          example: authentication_error
       example:
-        embedding:
-        - 0.0023
-        - -0.0134
-        - 0.0256
-        index: 0
-        object: embedding
-    EmbeddingUsage:
-      type: object
-      description: Usage statistics for embedding requests.
-      required:
-      - prompt_tokens
-      - total_tokens
-      properties:
-        prompt_tokens:
-          type: integer
-          format: int32
-          description: Number of tokens in the input.
-          example: 6
-        total_tokens:
-          type: integer
-          format: int32
-          description: Total number of tokens used.
-          example: 6
-      example:
-        prompt_tokens: 6
-        total_tokens: 6
+        code: invalid_api_key
+        message: Invalid API key provided
+        type: authentication_error
     EmbeddingRequest:
       type: object
       description: Request body for embeddings.
@@ -236,36 +206,66 @@ components:
       example:
         input: What is a doubleword?
         model: Qwen/Qwen3-30B-A3B-FP8
-    OpenAIError:
+    EmbeddingData:
       type: object
-      description: OpenAI-compatible error details.
+      description: A single embedding result.
       required:
-      - message
-      - type
+      - object
+      - index
+      - embedding
       properties:
-        code:
-          type:
-          - string
-          - 'null'
-          description: The error code.
-          example: invalid_api_key
-        message:
+        embedding:
+          type: array
+          items:
+            type: number
+            format: float
+          description: The embedding vector.
+        index:
+          type: integer
+          format: int32
+          description: The index of this embedding in the list.
+          example: 0
+        object:
           type: string
-          description: The error message.
-          example: Invalid API key provided
-        param:
-          type:
-          - string
-          - 'null'
-          description: The parameter that caused the error, if applicable.
-        type:
-          type: string
-          description: The type of error.
-          example: authentication_error
+          description: The object type, always "embedding".
+          example: embedding
       example:
-        code: invalid_api_key
-        message: Invalid API key provided
-        type: authentication_error
+        embedding:
+        - 0.0023
+        - -0.0134
+        - 0.0256
+        index: 0
+        object: embedding
+    EmbeddingInput:
+      oneOf:
+      - type: string
+        description: A single string to embed.
+      - type: array
+        items:
+          type: string
+        description: An array of strings to embed.
+      description: Input for embedding requests - can be a single string or array of strings.
+      example: What is a doubleword?
+    EmbeddingUsage:
+      type: object
+      description: Usage statistics for embedding requests.
+      required:
+      - prompt_tokens
+      - total_tokens
+      properties:
+        prompt_tokens:
+          type: integer
+          format: int32
+          description: Number of tokens in the input.
+          example: 6
+        total_tokens:
+          type: integer
+          format: int32
+          description: Total number of tokens used.
+          example: 6
+      example:
+        prompt_tokens: 6
+        total_tokens: 6
   securitySchemes:
     BearerAuth:
       type: http
