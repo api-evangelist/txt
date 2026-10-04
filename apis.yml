@@ -70,12 +70,13 @@ tags_raw:
 apis:
 - aid: txt:txt-batches-api
   name: .txt Batches API
-  description: 'Process large volumes of requests asynchronously.
+  description: >-
+    Process large volumes of requests asynchronously.
 
 
     Batch processing is ideal when you:
 
-    - Have many requests that don''t need immediate responses
+    - Have many requests that don't need immediate responses
 
     - Want to process data in bulk (e.g., embeddings for a document corpus)
 
@@ -86,7 +87,7 @@ apis:
     and retry failed requests.
 
 
-    [Getting started with the Batch API →](https://docs.doubleword.ai/batches/getting-started-with-batched-api)'
+    [Getting started with the Batch API →](https://docs.doubleword.ai/batches/getting-started-with-batched-api)
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
@@ -100,38 +101,10 @@ apis:
     url: https://docs.dottxt.ai/api/overview
   - type: APIReference
     url: https://docs.dottxt.ai/api/chat-completions
-- aid: txt:txt-chat-api
-  name: .txt Chat API
-  description: 'Create model responses for chat conversations.
-
-
-    Supports:
-
-    - **Multi-turn dialogue** with conversation history
-
-    - **System prompts** to control model behavior
-
-    - **Tool calling** for function execution and structured outputs
-
-    - **Streaming** for real-time token delivery
-
-    - **Sampling parameters** like temperature, top_p, and frequency penalties'
-  humanURL: https://docs.dottxt.ai/api/overview
-  baseURL: https://api.dottxt.ai/v1
-  tags:
-  - Chat
-  tags_raw:
-  - chat
-  properties:
-  - type: OpenAPI
-    url: openapi/txt-chat-api-openapi.yml
-  - type: Documentation
-    url: https://docs.dottxt.ai/api/overview
-  - type: APIReference
-    url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-embeddings-api
   name: .txt Embeddings API
-  description: 'Generate vector representations of text.
+  description: >-
+    Generate vector representations of text.
 
 
     Use embeddings for:
@@ -142,7 +115,7 @@ apis:
 
     - **Classification** - categorize text based on similarity to examples
 
-    - **Recommendations** - suggest related content'
+    - **Recommendations** - suggest related content
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
@@ -158,7 +131,8 @@ apis:
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-files-api
   name: .txt Files API
-  description: 'Upload and manage JSONL files for batch processing.
+  description: >-
+    Upload and manage JSONL files for batch processing.
 
 
     Each line in the file should be a JSON object with:
@@ -172,7 +146,7 @@ apis:
     - `body` - the request payload
 
 
-    [Learn more about the JSONL file format →](https://docs.doubleword.ai/batches/jsonl-files)'
+    [Learn more about the JSONL file format →](https://docs.doubleword.ai/batches/jsonl-files)
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
@@ -188,10 +162,11 @@ apis:
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-models-api
   name: .txt Models API
-  description: 'List and retrieve information about available models.
+  description: >-
+    List and retrieve information about available models.
 
 
-    Use these endpoints to discover which models you have access to and their capabilities.'
+    Use these endpoints to discover which models you have access to and their capabilities.
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
@@ -207,7 +182,8 @@ apis:
     url: https://docs.dottxt.ai/api/chat-completions
 - aid: txt:txt-responses-api-api
   name: .txt Responses API
-  description: 'Create model responses with enhanced capabilities.
+  description: >-
+    Create model responses with enhanced capabilities.
 
 
     Open Responses compatible endpoint providing advanced features:
@@ -224,7 +200,7 @@ apis:
     - **Context management** - Handle overflow with `truncation` parameter
 
 
-    [Open Responses API Reference →](https://www.openresponses.org/reference)'
+    [Open Responses API Reference →](https://www.openresponses.org/reference)
   humanURL: https://docs.dottxt.ai/api/overview
   baseURL: https://api.dottxt.ai/v1
   tags:
@@ -234,6 +210,34 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/txt-responses-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dottxt.ai/api/overview
+  - type: APIReference
+    url: https://docs.dottxt.ai/api/chat-completions
+- aid: txt:txt-chat-completions-api
+  name: .txt Chat Completions API
+  description: >-
+    Create model responses for chat conversations.
+
+
+    Supports:
+
+    - **Multi-turn dialogue** with conversation history
+
+    - **System prompts** to control model behavior
+
+    - **Tool calling** for function execution and structured outputs
+
+    - **Streaming** for real-time token delivery
+
+    - **Sampling parameters** like temperature, top_p, and frequency penalties
+  humanURL: https://docs.dottxt.ai/api/overview
+  baseURL: https://api.dottxt.ai/v1
+  tags:
+  - Chat Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/txt-chat-completions-api-openapi.yml
   - type: Documentation
     url: https://docs.dottxt.ai/api/overview
   - type: APIReference

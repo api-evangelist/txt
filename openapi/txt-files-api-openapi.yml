@@ -280,26 +280,6 @@ paths:
           description: An unexpected error occurred. Retry the request or contact support if the issue persists.
 components:
   schemas:
-    FileDeleteResponse:
-      type: object
-      description: Response for file deletion
-      required:
-      - id
-      - object
-      - deleted
-      properties:
-        deleted:
-          type: boolean
-          example: true
-        id:
-          type: string
-          example: file-abc123
-        object:
-          $ref: '#/components/schemas/ObjectType'
-      example:
-        deleted: true
-        id: file-abc123
-        object: file
     FileCostEstimate:
       type: object
       description: Response for file cost estimation
@@ -359,46 +339,6 @@ components:
       description: Object type for lists - always "list"
       enum:
       - list
-    ObjectType:
-      type: string
-      description: Object type - always "file"
-      enum:
-      - file
-    ModelCostBreakdown:
-      type: object
-      description: Per-model cost breakdown
-      required:
-      - model
-      - request_count
-      - estimated_input_tokens
-      - estimated_output_tokens
-      - estimated_cost
-      properties:
-        estimated_cost:
-          type: string
-          description: Cost as string to preserve decimal precision
-          example: '0.75'
-        estimated_input_tokens:
-          type: integer
-          format: int64
-          example: 50000
-        estimated_output_tokens:
-          type: integer
-          format: int64
-          example: 25000
-        model:
-          type: string
-          example: Qwen/Qwen3-30B-A3B-FP8
-        request_count:
-          type: integer
-          format: int64
-          example: 100
-      example:
-        estimated_cost: '0.75'
-        estimated_input_tokens: 50000
-        estimated_output_tokens: 25000
-        model: Qwen/Qwen3-30B-A3B-FP8
-        request_count: 100
     FileResponse:
       type: object
       description: File object response (OpenAI-compatible)
@@ -440,6 +380,11 @@ components:
         id: file-abc123
         object: file
         purpose: batch
+    ObjectType:
+      type: string
+      description: Object type - always "file"
+      enum:
+      - file
     FileListResponse:
       type: object
       description: Response for file list
@@ -479,6 +424,61 @@ components:
         has_more: false
         last_id: file-abc123
         object: list
+    ModelCostBreakdown:
+      type: object
+      description: Per-model cost breakdown
+      required:
+      - model
+      - request_count
+      - estimated_input_tokens
+      - estimated_output_tokens
+      - estimated_cost
+      properties:
+        estimated_cost:
+          type: string
+          description: Cost as string to preserve decimal precision
+          example: '0.75'
+        estimated_input_tokens:
+          type: integer
+          format: int64
+          example: 50000
+        estimated_output_tokens:
+          type: integer
+          format: int64
+          example: 25000
+        model:
+          type: string
+          example: Qwen/Qwen3-30B-A3B-FP8
+        request_count:
+          type: integer
+          format: int64
+          example: 100
+      example:
+        estimated_cost: '0.75'
+        estimated_input_tokens: 50000
+        estimated_output_tokens: 25000
+        model: Qwen/Qwen3-30B-A3B-FP8
+        request_count: 100
+    FileDeleteResponse:
+      type: object
+      description: Response for file deletion
+      required:
+      - id
+      - object
+      - deleted
+      properties:
+        deleted:
+          type: boolean
+          example: true
+        id:
+          type: string
+          example: file-abc123
+        object:
+          $ref: '#/components/schemas/ObjectType'
+      example:
+        deleted: true
+        id: file-abc123
+        object: file
   securitySchemes:
     BearerAuth:
       type: http

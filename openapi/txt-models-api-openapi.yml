@@ -98,6 +98,20 @@ components:
           object: model
           owned_by: qwen
         object: list
+    OpenAIErrorResponse:
+      type: object
+      description: OpenAI-compatible error response.
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/OpenAIError'
+          description: The error details.
+      example:
+        error:
+          code: invalid_api_key
+          message: Invalid API key provided
+          type: authentication_error
     OpenAIError:
       type: object
       description: OpenAI-compatible error details.
@@ -159,20 +173,6 @@ components:
         id: Qwen/Qwen3-30B-A3B-FP8
         object: model
         owned_by: qwen
-    OpenAIErrorResponse:
-      type: object
-      description: OpenAI-compatible error response.
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/OpenAIError'
-          description: The error details.
-      example:
-        error:
-          code: invalid_api_key
-          message: Invalid API key provided
-          type: authentication_error
   securitySchemes:
     BearerAuth:
       type: http

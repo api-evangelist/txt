@@ -370,37 +370,16 @@ paths:
           description: An unexpected error occurred. Retry the request or contact support if the issue persists.
 components:
   schemas:
-    RetryRequestsRequest:
-      type: object
-      description: Request body for retrying specific requests
-      required:
-      - request_ids
-      properties:
-        request_ids:
-          type: array
-          items:
-            type: string
-          description: Array of request IDs to retry
-      example:
-        request_ids:
-        - req-abc123
-        - req-def456
-    BatchErrors:
-      type: object
-      description: Batch-level errors
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BatchError'
-          description: Array of error details
-      example:
-        data:
-        - code: invalid_request
-          line: 5
-          message: Invalid JSON on line 5
+    BatchObjectType:
+      type: string
+      description: Object type - always "batch"
+      enum:
+      - batch
+    ListObjectType:
+      type: string
+      description: Object type for lists - always "list"
+      enum:
+      - list
     BatchResponse:
       type: object
       description: Batch object response (OpenAI-compatible)
@@ -519,48 +498,50 @@ components:
           failed: 2
           total: 100
         status: completed
-    BatchError:
+    BatchListResponse:
       type: object
-      description: Individual error in a batch
+      description: Response for batch list
       required:
-      - message
+      - object
+      - data
+      - has_more
       properties:
-        code:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchResponse'
+        first_id:
           type:
           - string
           - 'null'
-          description: An error code identifying the error type
-          example: invalid_request
-        line:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The line number of the input file where the error occurred, if applicable
-          example: 5
-        message:
-          type: string
-          description: A human-readable message providing more details about the error
-          example: Invalid JSON on line 5
-        param:
+          example: batch-abc123
+        has_more:
+          type: boolean
+          example: false
+        last_id:
           type:
           - string
           - 'null'
-          description: The name of the parameter that caused the error, if applicable
+          example: batch-abc123
+        object:
+          $ref: '#/components/schemas/ListObjectType'
       example:
-        code: invalid_request
-        line: 5
-        message: Invalid JSON on line 5
-    ListObjectType:
-      type: string
-      description: Object type for lists - always "list"
-      enum:
-      - list
-    BatchObjectType:
-      type: string
-      description: Object type - always "batch"
-      enum:
-      - batch
+        data:
+        - completion_window: 24h
+          created_at: 1703187200
+          endpoint: /v1/chat/completions
+          id: batch-abc123
+          input_file_id: file-abc123
+          object: batch
+          request_counts:
+            completed: 98
+            failed: 2
+            total: 100
+          status: completed
+        first_id: batch-abc123
+        has_more: false
+        last_id: batch-abc123
+        object: list
     CreateBatchRequest:
       type: object
       description: Request body for creating a batch
@@ -598,30 +579,69 @@ components:
         completion_window: 24h
         endpoint: /v1/chat/completions
         input_file_id: file-abc123
-    RequestCounts:
+    BatchErrors:
       type: object
-      description: Request counts for a batch
+      description: Batch-level errors
       required:
-      - total
-      - completed
-      - failed
+      - data
       properties:
-        completed:
-          type: integer
-          format: int64
-          example: 98
-        failed:
-          type: integer
-          format: int64
-          example: 2
-        total:
-          type: integer
-          format: int64
-          example: 100
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchError'
+          description: Array of error details
       example:
-        completed: 98
-        failed: 2
-        total: 100
+        data:
+        - code: invalid_request
+          line: 5
+          message: Invalid JSON on line 5
+    BatchError:
+      type: object
+      description: Individual error in a batch
+      required:
+      - message
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+          description: An error code identifying the error type
+          example: invalid_request
+        line:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The line number of the input file where the error occurred, if applicable
+          example: 5
+        message:
+          type: string
+          description: A human-readable message providing more details about the error
+          example: Invalid JSON on line 5
+        param:
+          type:
+          - string
+          - 'null'
+          description: The name of the parameter that caused the error, if applicable
+      example:
+        code: invalid_request
+        line: 5
+        message: Invalid JSON on line 5
+    RetryRequestsRequest:
+      type: object
+      description: Request body for retrying specific requests
+      required:
+      - request_ids
+      properties:
+        request_ids:
+          type: array
+          items:
+            type: string
+          description: Array of request IDs to retry
+      example:
+        request_ids:
+        - req-abc123
+        - req-def456
     BatchAnalytics:
       type: object
       description: Aggregated analytics metrics for batch requests
@@ -679,50 +699,30 @@ components:
         total_prompt_tokens: 50000
         total_requests: 100
         total_tokens: 75000
-    BatchListResponse:
+    RequestCounts:
       type: object
-      description: Response for batch list
+      description: Request counts for a batch
       required:
-      - object
-      - data
-      - has_more
+      - total
+      - completed
+      - failed
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BatchResponse'
-        first_id:
-          type:
-          - string
-          - 'null'
-          example: batch-abc123
-        has_more:
-          type: boolean
-          example: false
-        last_id:
-          type:
-          - string
-          - 'null'
-          example: batch-abc123
-        object:
-          $ref: '#/components/schemas/ListObjectType'
+        completed:
+          type: integer
+          format: int64
+          example: 98
+        failed:
+          type: integer
+          format: int64
+          example: 2
+        total:
+          type: integer
+          format: int64
+          example: 100
       example:
-        data:
-        - completion_window: 24h
-          created_at: 1703187200
-          endpoint: /v1/chat/completions
-          id: batch-abc123
-          input_file_id: file-abc123
-          object: batch
-          request_counts:
-            completed: 98
-            failed: 2
-            total: 100
-          status: completed
-        first_id: batch-abc123
-        has_more: false
-        last_id: batch-abc123
-        object: list
+        completed: 98
+        failed: 2
+        total: 100
   securitySchemes:
     BearerAuth:
       type: http
